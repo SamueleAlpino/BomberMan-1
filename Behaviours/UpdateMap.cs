@@ -21,7 +21,7 @@ namespace BomberMan
         {
             this.cells = cells;
             Cells      = cells;
-            Pool<Box2D>.Register(() => new Box2D( Vector2.Zero, 1, 1, Owner), 100);
+            Pool<BoxCollider>.Register(() => new BoxCollider( Vector2.Zero, 1, 1, Owner), 100);
 
             for (int i = 0; i < cells.Count; i++)
             {

@@ -15,7 +15,7 @@ namespace BomberMan.GameObjects
     {
         private Dictionary<string, AnimationRenderer> renderer;
         private List<AnimationRenderer> xplosion = new List<AnimationRenderer>();
-        private List<Box2D> colliders = new List<Box2D>();
+        private List<BoxCollider> colliders = new List<BoxCollider>();
         private List<Vector2> locations = new List<Vector2>();
         private StateExplode explode;
         private StateWait wait;

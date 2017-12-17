@@ -11,10 +11,10 @@ namespace BomberMan.Behaviours
 {
     public class UpdateColliders : Behaviour, IUpdatable
     {
-        private Box2D collider;
+        private BoxCollider collider;
         private Vector2 offset;
 
-        public UpdateColliders(Box2D collider, GameObject owner, Vector2 offset) : base(owner)
+        public UpdateColliders(BoxCollider collider, GameObject owner, Vector2 offset) : base(owner)
         {
             this.collider = collider;
             this.offset = offset;

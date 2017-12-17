@@ -13,7 +13,7 @@ namespace BomberMan.GameObjects
     public class Explosion : GameObject, IPhysical
     {
         private AnimationRenderer anim;
-        public Box2D BoxCollider { get; set; }
+        public BoxCollider BoxCollider { get; set; }
 
         public Explosion(GameObject owner, Vector2 spawnPosition) : base((int)RenderLayer.Pawn, "Explosion")
         {
@@ -29,11 +29,11 @@ namespace BomberMan.GameObjects
                 71, 72, 73, 74, 75
             }, 10f * Time.DeltaTime, spawnPosition, true, false, Vector2.One * 1.1f);
 
-            BoxCollider = new Box2D(spawnPosition, 0.7f, 0.7f, owner);
+            BoxCollider = new BoxCollider(spawnPosition, 0.7f, 0.7f, owner);
             anim.UpdatePosition = false;
 
             this.AddBehaviour<AnimationRenderer>(anim);
-            AddBehaviour<Box2D>(BoxCollider);
+            AddBehaviour<BoxCollider>(BoxCollider);
 
             Engine.AddPhysicalObject(this);
             Engine.Spawn(this);

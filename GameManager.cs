@@ -28,7 +28,6 @@ namespace BomberMan
         private Player  player;
         private Level   currentLevel;
 
-
         private GameManager(GameObject owner) : base(owner)
         {
             gameSetup      = new StateGameSetup(this);
@@ -37,7 +36,6 @@ namespace BomberMan
             gameLose       = new StateGameLose(this);
 
             //Link up fsm any state
-            //asdasd
             gameSetup.Next = gameLoop;
             gameLoop.NextW = gameWin;
             gameLoop.NextL = gameLose;

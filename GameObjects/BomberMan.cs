@@ -32,7 +32,7 @@ namespace BomberMan.GameObjects
         private IState bombState;
         private List<IState> states;
 
-        public Box2D BoxCollider { get; set; }
+        public BoxCollider BoxCollider { get; set; }
 
         public Player(string fileName, Vector2 drawPosition) : base((int)RenderLayer.Pawn, "BomberMan")
         {
@@ -52,8 +52,8 @@ namespace BomberMan.GameObjects
 
             renderer.ToList().ForEach(item => AddBehaviour<AnimationRenderer>(item.Value));
 
-            BoxCollider = new Box2D(this.Transform.Position, 0.7f, 0.7f, this);
-            AddBehaviour<Box2D>(BoxCollider);
+            BoxCollider = new BoxCollider(this.Transform.Position, 0.7f, 0.7f, this);
+            AddBehaviour<BoxCollider>(BoxCollider);
             Engine.AddPhysicalObject(this);
 
             //init fsm

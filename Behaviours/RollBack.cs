@@ -12,9 +12,9 @@ namespace BomberMan.Behaviours
     public class RollBack : Behaviour, IUpdatable
     {
         private GameObject owner;
-        private Box2D box;
+        private BoxCollider box;
 
-        public RollBack(GameObject owner, Box2D box) : base(owner)
+        public RollBack(GameObject owner, BoxCollider box) : base(owner)
         {
             this.owner = owner;
             this.box = box;
