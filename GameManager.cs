@@ -37,6 +37,7 @@ namespace BomberMan
             gameLose       = new StateGameLose(this);
 
             //Link up fsm any state
+            //asdasd
             gameSetup.Next = gameLoop;
             gameLoop.NextW = gameWin;
             gameLoop.NextL = gameLose;
