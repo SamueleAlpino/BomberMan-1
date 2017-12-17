@@ -129,7 +129,6 @@ C:\Users\nb37\Documents\GitHub\BomberMan\bin\Debug\NVorbis.dll
 C:\Users\nb37\Documents\GitHub\BomberMan\bin\Debug\BehaviourEngine.pdb
 C:\Users\nb37\Documents\GitHub\BomberMan\bin\Debug\BehaviourEngine.dll.config
 C:\Users\nb37\Documents\GitHub\BomberMan\bin\Debug\OpenTK.xml
-C:\Users\nb37\Documents\GitHub\BomberMan\bin\Debug\NVorbis.xml
 C:\Users\nb37\Documents\GitHub\BomberMan\obj\Debug\BomberMan.csprojResolveAssemblyReference.cache
 C:\Users\nb37\Documents\GitHub\BomberMan\obj\Debug\BomberMan.csproj.CoreCompileInputs.cache
 C:\Users\nb37\Documents\GitHub\BomberMan\obj\Debug\BomberMan.exe
