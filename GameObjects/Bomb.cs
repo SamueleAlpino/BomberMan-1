@@ -15,8 +15,8 @@ namespace BomberMan.GameObjects
     {
         private Dictionary<string, AnimationRenderer> renderer;
         private List<AnimationRenderer> xplosion = new List<AnimationRenderer>();
-        private List<BoxCollider> colliders = new List<BoxCollider>();
-        private List<Vector2> locations = new List<Vector2>();
+        private List<BoxCollider> colliders      = new List<BoxCollider>();
+        private List<Vector2> locations          = new List<Vector2>();
         private StateExplode explode;
         private StateWait wait;
         private IState currentState;
@@ -40,7 +40,7 @@ namespace BomberMan.GameObjects
             //add behaviour for each value
             renderer.ToList().ForEach(x => AddBehaviour<AnimationRenderer>(x.Value));
 
-            wait = new StateWait(this);
+            wait    = new StateWait(this);
             explode = new StateExplode(this);
 
             explode.Next = wait;
@@ -107,11 +107,15 @@ namespace BomberMan.GameObjects
             public StateWait Next { get; set; }
             private Bomb owner { get; set; }
             private Timer timer;
+            private Explosion explosion;
 
             public StateExplode(Bomb owner)
             {
                 this.owner = owner;
                 timer = new Timer(3);
+           //     explosion        = new Explosion(owner, Vector2.Zero);
+           //     explosion.Active = false;
+           //     Pool<Explosion>.Register(()=> explosion);
             }
 
             public void OnStateEnter()
@@ -130,7 +134,16 @@ namespace BomberMan.GameObjects
                 {
                     owner.locations = owner.GetAdjacentLocation(owner.Transform.Position);
 
-                    owner.locations.ForEach(x => new Explosion(owner, x));
+               //     owner.locations.ForEach( x => explosion = new Explosion(owner, x));
+
+     //               for (int i = 0; i < owner.locations.Count; i++)
+     //               {
+     //                   explosion = Pool<Explosion>.GetInstance( x =>
+     //                   {
+     //                       x.Transform.Position = owner.locations[i];
+     //                       x.Active             = true;
+     //                   });
+     //               }
 
                     owner.Exploding = false;
                 }
@@ -147,6 +160,14 @@ namespace BomberMan.GameObjects
                             x.Active = false;
                         }
                     );
+          //          Pool<Explosion>.RecycleInstance
+          //          (
+          //              explosion, x =>
+          //              {
+          //                  x.Active = false;
+          //                  x.Transform.Position = new Vector2(3,3);
+          //              }
+          //          );
                     Next.OnStateEnter();
                     return Next;
                 }

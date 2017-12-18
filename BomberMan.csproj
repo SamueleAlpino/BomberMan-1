@@ -66,8 +66,7 @@
     <Compile Include="GameObjects\Explosion.cs" />
     <Compile Include="GameObjects\Map.cs" />
     <Compile Include="LevelManager.cs" />
-    <Compile Include="Behaviours\MapRenderer.cs" />
-    <Compile Include="Behaviours\UpdateMap.cs" />
+    <Compile Include="Behaviours\GenerateMap.cs" />
     <None Include="Levels\Level00.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

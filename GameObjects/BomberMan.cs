@@ -52,7 +52,7 @@ namespace BomberMan.GameObjects
 
             renderer.ToList().ForEach(item => AddBehaviour<AnimationRenderer>(item.Value));
 
-            BoxCollider = new BoxCollider(this.Transform.Position, 0.7f, 0.7f, this);
+            BoxCollider = new BoxCollider(0.7f, 0.7f, this);
             AddBehaviour<BoxCollider>(BoxCollider);
             Engine.AddPhysicalObject(this);
 
@@ -107,7 +107,7 @@ namespace BomberMan.GameObjects
             states.Add(bombState);
 
             AddBehaviour<UpdateStates>(new UpdateStates(this, states));
-            AddBehaviour<UpdateColliders>(new UpdateColliders(BoxCollider, this, Vector2.Zero));
+      //      AddBehaviour<UpdateColliders>(new UpdateColliders(BoxCollider, this, Vector2.Zero));
         }
 
 

@@ -10,14 +10,16 @@ using BehaviourEngine.Interfaces;
 
 namespace BomberMan.GameObjects
 {
+
+
     public class Explosion : GameObject, IPhysical
     {
         private AnimationRenderer anim;
         public BoxCollider BoxCollider { get; set; }
 
-        public Explosion(GameObject owner, Vector2 spawnPosition) : base((int)RenderLayer.Pawn, "Explosion")
+        public Explosion( Vector2 spawnPosition) : base((int)RenderLayer.Pawn, "Explosion")
         {
-            anim = new AnimationRenderer(owner, FlyWeight.Get("Explosion"), 100, 100, 9, new int[]
+            anim = new AnimationRenderer(this, FlyWeight.Get("Explosion"), 100, 100, 9, new int[]
             {
                 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
                 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
@@ -29,8 +31,8 @@ namespace BomberMan.GameObjects
                 71, 72, 73, 74, 75
             }, 15f * Time.DeltaTime, spawnPosition, true, false, Vector2.One * 1.1f);
 
-            BoxCollider = new BoxCollider(spawnPosition, 0.7f, 0.7f, owner);
-            anim.UpdatePosition = false;
+            BoxCollider = new BoxCollider(0.7f, 0.7f, this);
+            anim.UpdatePosition = true;
 
             this.AddBehaviour<AnimationRenderer>(anim);
             AddBehaviour<BoxCollider>(BoxCollider);

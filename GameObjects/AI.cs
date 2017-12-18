@@ -52,7 +52,8 @@ namespace BomberMan.GameObjects
             renderer = new AnimationRenderer(this, FlyWeight.Get("Balloon"), ((int)(float)Math.Floor(18.5m)), 17, 4, new int[] { 0, 1, 2, 3 }, 0.2f, spawnPos, true, false);
             renderer.Owner.Transform.Position = spawnPos;
 
-            BoxCollider = new BoxCollider(this.Transform.Position, 0.7f, 0.7f, this);
+            BoxCollider = new BoxCollider(0.7f, 0.7f, this);
+            BoxCollider.Offset = new Vector2(0.2f, 0.2f);
             Engine.AddPhysicalObject(this);
             AddBehaviour<BoxCollider>(BoxCollider);
 
@@ -74,7 +75,7 @@ namespace BomberMan.GameObjects
             states.Add(currentState);
 
             AddBehaviour<UpdateStates>(new UpdateStates(this, states));
-            AddBehaviour<UpdateColliders>(new UpdateColliders(BoxCollider, this, new Vector2(.15f, .12f)));
+       //     AddBehaviour<UpdateColliders>(new UpdateColliders(BoxCollider, this, new Vector2(.15f, .12f)));
         }
 
         private class CollisionHandler : Behaviour, IUpdatable

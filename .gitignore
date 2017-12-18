@@ -1,0 +1,10 @@
+
+bin/Debug/BomberMan.exe
+bin/Debug/BehaviourEngine.pdb
+bin/Debug/BehaviourEngine.dll
+bin/Debug/BomberMan.exe
+obj/Debug/BomberMan.csprojResolveAssemblyReference.cache
+*.pdb
+*.exe
+*.cache
+bin/Debug/BomberMan.vshost.exe.manifest

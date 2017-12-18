@@ -58,8 +58,6 @@ namespace BomberMan
             public StateGameSetup(GameManager owner)
             {
                 this.owner = owner;
-                //ciao
-                //olè
             }
 
             public void OnStateEnter()
