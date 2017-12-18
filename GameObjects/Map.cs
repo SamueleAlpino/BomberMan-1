@@ -24,8 +24,8 @@ namespace BomberMan.GameObjects
         }
 
         private Node[] mapNodes;
-        private MapRenderer renderer;
-        private static UpdateMap updater;
+        private GenerateMap renderer;
+        private static GenerateMap updater;
 
         public Map(List<int> cells, int rows, int columns, int index) : base((int)RenderLayer.Background)
         {
@@ -33,8 +33,8 @@ namespace BomberMan.GameObjects
             columnsid = columns;
             cellid = cells.ToArray();
 
-            renderer = AddBehaviour<MapRenderer>(new MapRenderer(  cells, columns, this));
-            updater  = AddBehaviour<UpdateMap>(new UpdateMap(this, cells, columns));
+      //      renderer = AddBehaviour<MapRenderer>(new MapRenderer(  cells, columns, this));
+            updater  = AddBehaviour<GenerateMap>(new GenerateMap(this, cells, columns));
 
             for (int i = 0; i < cells.Count; i++)
             {
