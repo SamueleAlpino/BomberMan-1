@@ -203,10 +203,9 @@ namespace BomberMan.GameObjects
 
             public IState OnStateUpdate()
             {
-                //owner.SetAnimation("WalkLeft", new Vector2(owner.Transform.Position.X - owner.speed * Time.DeltaTime, owner.Transform.Position.Y));
                 owner.EnableAnimation("WalkLeft", true);
 
-                if (!Input.IsKeyPressed(KeyCode.A)) { NextIdle.OnStateEnter(); return NextIdle; }
+                //if (!Input.IsKeyPressed(KeyCode.A)) { NextIdle.OnStateEnter(); return NextIdle; }
 
                 return this;
             }
@@ -236,10 +235,9 @@ namespace BomberMan.GameObjects
 
             public IState OnStateUpdate()
             {
-                //owner.SetAnimation("WalkRight", new Vector2(owner.Transform.Position.X + owner.speed * Time.DeltaTime, owner.Transform.Position.Y));
                 owner.EnableAnimation("WalkRight", true);
 
-                if (!Input.IsKeyPressed(KeyCode.D)) { NextIdle.OnStateEnter(); return NextIdle; }
+                //if (!Input.IsKeyPressed(KeyCode.D)) { NextIdle.OnStateEnter(); return NextIdle; }
 
                 return this;
             }
@@ -269,7 +267,6 @@ namespace BomberMan.GameObjects
 
             public IState OnStateUpdate()
             {
-                //owner.SetAnimation("WalkUp", new Vector2(owner.Transform.Position.X, owner.Transform.Position.Y - owner.speed * Time.DeltaTime));
                 owner.EnableAnimation("WalkUp", true);
 
                 //if (!Input.IsKeyPressed(KeyCode.W)) { NextIdle.OnStateEnter(); return NextIdle; }
@@ -302,10 +299,9 @@ namespace BomberMan.GameObjects
 
             public IState OnStateUpdate()
             {
-                //owner.SetAnimation("WalkDown", new Vector2(owner.Transform.Position.X, owner.Transform.Position.Y + owner.speed * Time.DeltaTime));
                 owner.EnableAnimation("WalkDown", true);
 
-                if (!Input.IsKeyPressed(KeyCode.S)) { NextIdle.OnStateEnter(); return NextIdle; }
+                //if (!Input.IsKeyPressed(KeyCode.S)) { NextIdle.OnStateEnter(); return NextIdle; }
 
                 return this;
             }
