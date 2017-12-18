@@ -87,6 +87,14 @@ namespace BomberMan.GameObjects
             }
         }
 
+        public static bool GetCellMove(int x, int y)
+        {
+            int index = x + (columnsid - 1) * y;
+            if (cellid[index] == 0 || cellid[index] == 5)
+                return true;
+            return false;
+        }
+
         public static bool GetIndex(bool explosion, int x, int y) // for explosion spawn
         {
             int index = x + (columnsid - 1) * y;

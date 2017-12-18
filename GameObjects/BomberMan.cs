@@ -107,10 +107,10 @@ namespace BomberMan.GameObjects
             states.Add(bombState);
 
             AddBehaviour<UpdateStates>(new UpdateStates(this, states));
-      //      AddBehaviour<UpdateColliders>(new UpdateColliders(BoxCollider, this, Vector2.Zero));
+            AddBehaviour<Controller>(new Controller(this));
         }
 
-
+        [Obsolete("Method is deprecated.")]
         public void SetAnimation(string animation, Vector2 direction) => renderer[animation].Owner.Transform.Position = direction;
 
         [Obsolete("This Method is deprecated, use the other overload instead.")]
@@ -137,7 +137,7 @@ namespace BomberMan.GameObjects
         {
             if(other is Tile)
             {
-                //TODO: player collision must not go throught the walls
+                //TODO: player collision
             }
         }
 
@@ -203,7 +203,7 @@ namespace BomberMan.GameObjects
 
             public IState OnStateUpdate()
             {
-                owner.SetAnimation("WalkLeft", new Vector2(owner.Transform.Position.X - owner.speed * Time.DeltaTime, owner.Transform.Position.Y));
+                //owner.SetAnimation("WalkLeft", new Vector2(owner.Transform.Position.X - owner.speed * Time.DeltaTime, owner.Transform.Position.Y));
                 owner.EnableAnimation("WalkLeft", true);
 
                 if (!Input.IsKeyPressed(KeyCode.A)) { NextIdle.OnStateEnter(); return NextIdle; }
@@ -236,7 +236,7 @@ namespace BomberMan.GameObjects
 
             public IState OnStateUpdate()
             {
-                owner.SetAnimation("WalkRight", new Vector2(owner.Transform.Position.X + owner.speed * Time.DeltaTime, owner.Transform.Position.Y));
+                //owner.SetAnimation("WalkRight", new Vector2(owner.Transform.Position.X + owner.speed * Time.DeltaTime, owner.Transform.Position.Y));
                 owner.EnableAnimation("WalkRight", true);
 
                 if (!Input.IsKeyPressed(KeyCode.D)) { NextIdle.OnStateEnter(); return NextIdle; }
@@ -269,10 +269,10 @@ namespace BomberMan.GameObjects
 
             public IState OnStateUpdate()
             {
-                owner.SetAnimation("WalkUp", new Vector2(owner.Transform.Position.X, owner.Transform.Position.Y - owner.speed * Time.DeltaTime));
+                //owner.SetAnimation("WalkUp", new Vector2(owner.Transform.Position.X, owner.Transform.Position.Y - owner.speed * Time.DeltaTime));
                 owner.EnableAnimation("WalkUp", true);
 
-                if (!Input.IsKeyPressed(KeyCode.W)) { NextIdle.OnStateEnter(); return NextIdle; }
+                //if (!Input.IsKeyPressed(KeyCode.W)) { NextIdle.OnStateEnter(); return NextIdle; }
 
                 return this;
             }
@@ -302,7 +302,7 @@ namespace BomberMan.GameObjects
 
             public IState OnStateUpdate()
             {
-                owner.SetAnimation("WalkDown", new Vector2(owner.Transform.Position.X, owner.Transform.Position.Y + owner.speed * Time.DeltaTime));
+                //owner.SetAnimation("WalkDown", new Vector2(owner.Transform.Position.X, owner.Transform.Position.Y + owner.speed * Time.DeltaTime));
                 owner.EnableAnimation("WalkDown", true);
 
                 if (!Input.IsKeyPressed(KeyCode.S)) { NextIdle.OnStateEnter(); return NextIdle; }

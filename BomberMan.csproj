@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AStar.cs" />
+    <Compile Include="Behaviours\Controller.cs" />
     <Compile Include="Behaviours\Game.cs" />
     <Compile Include="Behaviours\RollBack.cs" />
     <Compile Include="Behaviours\UpdateColliders.cs" />

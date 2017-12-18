@@ -80,7 +80,7 @@ namespace BomberMan.GameObjects
             renderer[name].Show = render;
         }
 
-        public List<Vector2> GetAdjacentLocation(Vector2 from)
+        public static List<Vector2> GetAdjacentLocation(Vector2 from)
         {
             List<Vector2> adjacentLocation = new List<Vector2>();
 
@@ -132,7 +132,7 @@ namespace BomberMan.GameObjects
             {
                 if (owner.Exploding)
                 {
-                    owner.locations = owner.GetAdjacentLocation(owner.Transform.Position);
+                    owner.locations = GetAdjacentLocation(owner.Transform.Position);
 
                //     owner.locations.ForEach( x => explosion = new Explosion(owner, x));
 
