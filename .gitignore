@@ -22,3 +22,13 @@ bin/Debug/BomberMan.vshost.exe.manifest
 obj/Debug/BomberMan.csproj.CoreCompileInputs.cache
 >>>>>>> 7016ba3eb51952c4b3a69a262db5ab9a90a6bad1
 .vs/BomberMan/v15/sqlite3/storage.ide-wal
+*.pdb
+*.exe
+*.exe
+*.cache
+*.cache
+*.pdb
+*.exe
+*.ide-shm
+*.ide-shm
+*.ide-shm
