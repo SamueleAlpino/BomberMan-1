@@ -108,6 +108,7 @@ namespace BomberMan.GameObjects
 
             AddBehaviour<UpdateStates>(new UpdateStates(this, states));
             AddBehaviour<Controller>(new Controller(this));
+            AddBehaviour<OnAABBChecker>(new OnAABBChecker(this));
         }
 
         [Obsolete("Method is deprecated.")]
