@@ -1,8 +1,8 @@
-/bin/
-/obj/
+/bin/*
+/obj/*
 *.pdb
 *.exe
-*.cachea
+*.cache
 .vs/BomberMan/v15/sqlite3/storage.ide-wal
 .vs/BomberMan/v15/sqlite3/storage.ide-shm
 .vs/BomberMan/v15/sqlite3/storage.ide
