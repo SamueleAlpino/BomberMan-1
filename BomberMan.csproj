@@ -66,6 +66,7 @@
     <Compile Include="GameObjects\BomberMan.cs" />
     <Compile Include="GameObjects\Explosion.cs" />
     <Compile Include="GameObjects\Map.cs" />
+    <Compile Include="GameObjects\PowerUp.cs" />
     <Compile Include="LevelManager.cs" />
     <Compile Include="Behaviours\GenerateMap.cs" />
     <None Include="Levels\Level00.csv">
