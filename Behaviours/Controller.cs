@@ -26,12 +26,6 @@ namespace BomberMan.Behaviours
 
         public void Update()
         {
-            //Need to check positions
-            //check position every frame
-            //next when i press the key on a certain block, if i press w
-            //for example it checks for the cell on x = 0 y = -1 because it's always upwards
-            //nextPos will be other x or y for other locations
-
             if (Input.IsKeyPressed(KeyCode.W))
             {
                 nextPos = GetNextLocationUp(owner.Transform.Position);

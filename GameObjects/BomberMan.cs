@@ -11,16 +11,41 @@ using Aiv.Fast2D;
 using Aiv.Fast2D.Utils.Input;
 using BomberMan.Behaviours;
 
+public struct Stats
+{
+    public float Speed;
+    public int Health;
+
+    public Stats(float speed, int health)
+    {
+        this.Speed = speed;
+        this.Health = health;
+    }
+}
+
+public interface IModifier
+{
+    void ApplySpeed(float amount);
+    void ApplyHealth(int amount);
+}
+
+public interface IPowerup
+{
+    void ApplyPowerUp(IModifier powerup);
+}
+
 namespace BomberMan.GameObjects
 {
-    public class Player : GameObject , IPhysical
+    public class Player : GameObject , IPhysical, IModifier
     {
-        private Dictionary<string,
-            AnimationRenderer> renderer;
-        private float speed;
+        //Animation dictionary
+        private Dictionary<string, AnimationRenderer> renderer;
 
         //fms drop bomb
         private StateDrop drop;
+
+        //stats
+        private Stats stats;
 
         //fms walk state
         private WalkUp walkUp;
@@ -36,7 +61,7 @@ namespace BomberMan.GameObjects
 
         public Player(string fileName, Vector2 drawPosition) : base((int)RenderLayer.Pawn, "BomberMan")
         {
-            speed = 2.0f;
+            stats = new Stats()
 
             states = new List<IState>();
 
@@ -140,6 +165,16 @@ namespace BomberMan.GameObjects
             {
                 //TODO: player collision
             }
+        }
+
+        public void ApplySpeed(float amount)
+        {
+
+        }
+
+        public void ApplyHealth(int amount)
+        {
+
         }
 
         private class StateDrop : IState
