@@ -69,7 +69,7 @@ namespace BomberMan.GameObjects
             renderer[animation].Owner.Transform.Position = direction;
         }
 
-        public void EnableAnimation(bool bomb, string name, bool stop, bool render)
+        public void EnableAnimation(string name, bool stop, bool render)
         {
             renderer[name].Stop = stop;
             renderer[name].Show = render;
@@ -197,7 +197,7 @@ namespace BomberMan.GameObjects
                 if (timer.IsActive)
                     timer.Update();
 
-                owner.EnableAnimation(true, "Bomb", owner.Stop, owner.Show);
+                owner.EnableAnimation("Bomb", owner.Stop, owner.Show);
 
                 if (!timer.IsActive)
                 {

@@ -72,7 +72,8 @@ namespace BomberMan
                 owner.player        = new Player("Bomberman", 10, 4.3f, Map.playerSpawnPos);
                 Engine.Spawn(new SpawnManager(owner.currentLevel.currentMap, owner.player));
 
-                Engine.Spawn(new PowerUp(new Vector2(3, 3), PowerUpType.HEALTH));
+                //Spawn powerup test
+                //Engine.Spawn(new PowerUp(new Vector2(3, 3), PowerUpType.HEALTH));
 
                 Engine.Spawn(owner.player);
 

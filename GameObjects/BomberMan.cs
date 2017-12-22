@@ -25,7 +25,7 @@ public interface IPowerupable
 
 public interface IPowerup
 {
-    void ApplyPowerUp(IPowerupable mod);
+    void ApplyPowerUp(IPowerupable powerUp);
 }
 
 namespace BomberMan.GameObjects
@@ -62,11 +62,11 @@ namespace BomberMan.GameObjects
 
             renderer = new Dictionary<string, AnimationRenderer>();
             {
-                renderer.Add("WalkRight" , new AnimationRenderer(this, FlyWeight.Get(fileName), 29, 28, 15, new int[] { 3, 18, 33 }, 0.09f, drawPosition, false, true, false));
-                renderer.Add("WalkLeft"  , new AnimationRenderer(this, FlyWeight.Get(fileName), 29, 28, 15, new int[] { 1, 16, 31 }, 0.09f, drawPosition, false, true, false));
-                renderer.Add("WalkDown"  , new AnimationRenderer(this, FlyWeight.Get(fileName), 29, 28, 15, new int[] { 0, 15, 30, 15 }, 0.09f, drawPosition, false, true, false));
-                renderer.Add("WalkUp"    , new AnimationRenderer(this, FlyWeight.Get(fileName), 29, 28, 15, new int[] { 2, 17, 32 }, 0.09f, drawPosition, false, true, false));
-                renderer.Add("Idle"      , new AnimationRenderer(this, FlyWeight.Get(fileName), 29, 28, 15, new int[] { 0 }, 0.09f, drawPosition, true, false, false));
+                renderer.Add("WalkRight" , new AnimationRenderer(this, FlyWeight.Get(fileName), 29, 28, 15, new int[] { 3, 18, 33 }, 0.09f, drawPosition, false, true));
+                renderer.Add("WalkLeft"  , new AnimationRenderer(this, FlyWeight.Get(fileName), 29, 28, 15, new int[] { 1, 16, 31 }, 0.09f, drawPosition, false, true));
+                renderer.Add("WalkDown"  , new AnimationRenderer(this, FlyWeight.Get(fileName), 29, 28, 15, new int[] { 0, 15, 30, 15 }, 0.09f, drawPosition, false, true));
+                renderer.Add("WalkUp"    , new AnimationRenderer(this, FlyWeight.Get(fileName), 29, 28, 15, new int[] { 2, 17, 32 }, 0.09f, drawPosition, false, true));
+                renderer.Add("Idle"      , new AnimationRenderer(this, FlyWeight.Get(fileName), 29, 28, 15, new int[] { 0 }, 0.09f, drawPosition, true, false));
             };
             renderer.ToList().ForEach(item => Transform.Position = drawPosition);
 
@@ -208,7 +208,7 @@ namespace BomberMan.GameObjects
                        x.Active = true;
                        x.Stop = false;
                        x.Show = true;
-                       x.Transform.Position = new Vector2((int)owner.BoxCollider.Position.X, (int)owner.BoxCollider.Position.Y );
+                       x.Transform.Position = new Vector2((int)owner.BoxCollider.Position.X, (int)owner.BoxCollider.Position.Y);
                    }));
 
                     timer.Start();
@@ -243,9 +243,6 @@ namespace BomberMan.GameObjects
             public IState OnStateUpdate()
             {
                 owner.EnableAnimation("WalkLeft", true);
-
-                //if (!Input.IsKeyPressed(KeyCode.A)) { NextIdle.OnStateEnter(); return NextIdle; }
-
                 return this;
             }
         }
@@ -275,9 +272,6 @@ namespace BomberMan.GameObjects
             public IState OnStateUpdate()
             {
                 owner.EnableAnimation("WalkRight", true);
-
-                //if (!Input.IsKeyPressed(KeyCode.D)) { NextIdle.OnStateEnter(); return NextIdle; }
-
                 return this;
             }
         }
@@ -307,9 +301,6 @@ namespace BomberMan.GameObjects
             public IState OnStateUpdate()
             {
                 owner.EnableAnimation("WalkUp", true);
-
-                //if (!Input.IsKeyPressed(KeyCode.W)) { NextIdle.OnStateEnter(); return NextIdle; }
-
                 return this;
             }
         }
@@ -339,9 +330,6 @@ namespace BomberMan.GameObjects
             public IState OnStateUpdate()
             {
                 owner.EnableAnimation("WalkDown", true);
-
-                //if (!Input.IsKeyPressed(KeyCode.S)) { NextIdle.OnStateEnter(); return NextIdle; }
-
                 return this;
             }
         }
