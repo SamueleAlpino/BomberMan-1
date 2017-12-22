@@ -26,7 +26,6 @@ namespace BomberMan.GameObjects
 
         //values for health and speed pUps
         private float[] speedRndValue;
-        private int[] healthRndValue;
 
         static PowerUp() //ok
         {
@@ -40,7 +39,7 @@ namespace BomberMan.GameObjects
         public PowerUp(Vector2 spawnPosition, PowerUpType type) : base((int)RenderLayer.Pawn, "Powerup")
         {
             this.pType = type;
-            renderer = new SpriteRenderer(powerUpsTextures[(int)type], this);
+            renderer = new SpriteRenderer("Bomb", this);
             AddBehaviour<SpriteRenderer>(renderer);
 
             this.Transform.Position = spawnPosition;
@@ -58,23 +57,14 @@ namespace BomberMan.GameObjects
                 1.4f,
                 4.5f
             };
-
-            healthRndValue = new int[]
-            {
-                2,
-                4,
-                3,
-                2,
-                5
-            };
         }
 
         public void ApplyPowerUp(IPowerupable powerUp)
         {
             if (pType == PowerUpType.HEALTH)
-                powerUp.ApplyHealth(healthRndValue[RandomManager.Instance.Random.Next(0, healthRndValue.Length)]); 
+                powerUp.ApplyHealth(RandomManager.Instance.Random.Next(2, 4)); 
             else
-                powerUp.ApplySpeed(healthRndValue[RandomManager.Instance.Random.Next(0, speedRndValue.Length)]);
+                powerUp.ApplySpeed(speedRndValue[RandomManager.Instance.Random.Next(0, speedRndValue.Length)]);
         }
 
         public void OnIntersect(IPhysical other)

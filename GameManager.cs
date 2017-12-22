@@ -69,11 +69,12 @@ namespace BomberMan
                 owner.currentLevel = new Level(Engine.LevelPath + "/Level00" + ".csv", "Base0", 0);
                 Level.Load("Base0");
 
-                owner.player        = new Player("Bomberman", 10, 4.3f, Map.playerSpawnPos);
+                Stats stat = new Stats(10.0f, 10);
+                owner.player        = new Player("Bomberman", ref stat, Map.playerSpawnPos);
                 Engine.Spawn(new SpawnManager(owner.currentLevel.currentMap, owner.player));
 
                 //Spawn powerup test
-                //Engine.Spawn(new PowerUp(new Vector2(3, 3), PowerUpType.HEALTH));
+                Engine.Spawn(new PowerUp(new Vector2(3, 3), PowerUpType.SPEED));
 
                 Engine.Spawn(owner.player);
 
@@ -95,14 +96,14 @@ namespace BomberMan
 
             private void InitTextures()
             {
-                FlyWeight.Add("Wall", "Textures/wall.dat");
-                FlyWeight.Add("Obstacle", "Textures/obstacle.dat");
-                FlyWeight.Add("Warrior", "Textures/warrior.dat");
-                FlyWeight.Add("Bomb", "Textures/Bomb.dat");
-                FlyWeight.Add("Explosion", "Textures/Explosion.dat");
-                FlyWeight.Add("Bomberman","Textures/bomberman.dat" );
-                FlyWeight.Add("Balloon","Textures/ballon.dat" );
-                FlyWeight.Add("expl2","Textures/expl2.dat" );
+                FlyWeight.Add("Wall",       "Textures/wall.dat");
+                FlyWeight.Add("Obstacle",   "Textures/obstacle.dat");
+                FlyWeight.Add("Warrior",    "Textures/warrior.dat");
+                FlyWeight.Add("Bomb",       "Textures/Bomb.dat");
+                FlyWeight.Add("Explosion",  "Textures/Explosion.dat");
+                FlyWeight.Add("Bomberman",  "Textures/bomberman.dat" );
+                FlyWeight.Add("Balloon",    "Textures/ballon.dat" );
+                FlyWeight.Add("expl2",      "Textures/expl2.dat" );
             }
 
             private void InitObjectPooling()

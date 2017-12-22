@@ -15,6 +15,13 @@ public struct Stats
 {
     public float Speed;
     public int Health;
+
+    public Stats(float speed, int health)
+    {
+        this.Speed = speed;
+        this.Health = health;
+    }
+
 }
 
 public interface IPowerupable
@@ -52,11 +59,15 @@ namespace BomberMan.GameObjects
 
         //stats
         private Stats stat;
+        private float speed;
+        private int health;
 
-        public Player(string fileName, int health, float speed, Vector2 drawPosition) : base((int)RenderLayer.Pawn, "BomberMan")
+        private CharacterController controller;
+
+        public Player(string fileName, ref Stats stat, Vector2 drawPosition) : base((int)RenderLayer.Pawn, "BomberMan")
         {
-            stat.Speed = speed;
-            stat.Health = health;
+            speed = stat.Speed;
+            health = stat.Health;
 
             states = new List<IState>();
 
@@ -71,6 +82,10 @@ namespace BomberMan.GameObjects
             renderer.ToList().ForEach(item => Transform.Position = drawPosition);
 
             renderer.ToList().ForEach(item => AddBehaviour<AnimationRenderer>(item.Value));
+
+            //controller
+            controller = new CharacterController(this);
+            controller.Speed = speed;
 
             BoxCollider = new BoxCollider(0.7f, 0.7f, this);
             AddBehaviour<BoxCollider>(BoxCollider);
@@ -127,8 +142,9 @@ namespace BomberMan.GameObjects
             states.Add(bombState);
 
             AddBehaviour<UpdateStates>(new UpdateStates(this, states));
-            AddBehaviour<CharacterController>(new CharacterController(speed, this));
+            AddBehaviour<CharacterController>(controller);
         }
+
 
         [Obsolete("Method is deprecated.")]
         public void SetAnimation(string animation, Vector2 direction) => renderer[animation].Owner.Transform.Position = direction;
@@ -171,13 +187,14 @@ namespace BomberMan.GameObjects
         public void ApplySpeed(float amount)
         {
             //track previous speed and sum it so we don't lose data
-            stat.Speed += amount;
+            float finalSpeed = speed += amount;
+            this.GetComponent<CharacterController>().Speed = finalSpeed;
         }
 
         public float ApplyHealth(int amount)
         {
             //track back previous amount and sum it
-            return stat.Health += amount;
+            return health += amount;
         }
 
         private class StateDrop : IState

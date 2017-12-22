@@ -13,13 +13,12 @@ namespace BomberMan.Behaviours
         private bool        completed;
         private float       vDist;
         private Vector2     nextPos;
-        private float       speed;
+        public float        Speed { get; set; }
 
 
-        public CharacterController(float speed, GameObject owner) : base(owner)
+        public CharacterController(GameObject owner) : base(owner)
         {
             this.owner = owner;
-            this.speed = speed;
         }
 
         public void Update()
@@ -51,7 +50,7 @@ namespace BomberMan.Behaviours
             if (completed)
             {
                 vDist = (nextPos - owner.Transform.Position).Length;
-                owner.Transform.Position = Vector2.Lerp(owner.Transform.Position, nextPos, Time.DeltaTime * speed);
+                owner.Transform.Position = Vector2.Lerp(owner.Transform.Position, nextPos, Time.DeltaTime * Speed);
                 if (vDist < 1f)
                 {
                     nextPos = Vector2.Zero;

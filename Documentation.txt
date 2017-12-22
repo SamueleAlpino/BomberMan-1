@@ -16,4 +16,4 @@ size: Width '(24-1)' || Height '(12-1)'
 this is the list of current used id's to build the level.
 the map size it's static built-in and can't be changed, to build
 the own level the width and the height for the map must be the same as the 
-original one otherwise the game throws exception.
+original one otherwise the game throws exception. 
