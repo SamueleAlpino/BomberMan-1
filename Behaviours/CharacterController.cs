@@ -4,24 +4,22 @@ using BehaviourEngine;
 using BehaviourEngine.Interfaces;
 using BomberMan.GameObjects;
 using OpenTK;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BomberMan.Behaviours
 {
-    public class Controller : Behaviour, IUpdatable
+    public class CharacterController : Behaviour, IUpdatable
     {
-        private GameObject owner;
-        private bool completed;
-        float vDist;
-        Vector2 nextPos;
+        private GameObject  owner;
+        private bool        completed;
+        private float       vDist;
+        private Vector2     nextPos;
+        private float       speed;
 
-        public Controller(GameObject owner) : base(owner)
+
+        public CharacterController(float speed, GameObject owner) : base(owner)
         {
             this.owner = owner;
+            this.speed = speed;
         }
 
         public void Update()
@@ -53,39 +51,41 @@ namespace BomberMan.Behaviours
             if (completed)
             {
                 vDist = (nextPos - owner.Transform.Position).Length;
-                owner.Transform.Position = Vector2.Lerp(owner.Transform.Position, nextPos, Time.DeltaTime * 5.0f);
-
-                if (vDist < 0.3f)
+                owner.Transform.Position = Vector2.Lerp(owner.Transform.Position, nextPos, Time.DeltaTime * speed);
+                if (vDist < 1f)
+                {
+                    nextPos = Vector2.Zero;
                     completed = false;
+                }
             }
         }
 
-        private static Vector2 GetNextLocationUp(Vector2 from)
+        private Vector2 GetNextLocationUp(Vector2 from)
         {
             if (Map.GetCellMove((int)from.X, (int)from.Y))
                 return new Vector2(from.X, from.Y - 1);
-            return Vector2.Zero;
+            return from;
         }
 
-        private static Vector2 GetNextLocationDown(Vector2 from)
+        private Vector2 GetNextLocationDown(Vector2 from)
         {
             if (Map.GetCellMove((int)from.X, (int)from.Y))
                 return new Vector2(from.X, from.Y + 1);
-            return Vector2.Zero;
+            return from;
         }
 
-        private static Vector2 GetNextLocationLeft(Vector2 from)
+        private Vector2 GetNextLocationLeft(Vector2 from)
         {
             if (Map.GetCellMove((int)from.X, (int)from.Y))
                 return new Vector2(from.X - 1, from.Y);
-            return Vector2.Zero;
+            return from;
         }
 
-        private static Vector2 GetNextLocationRight(Vector2 from)
+        private Vector2 GetNextLocationRight(Vector2 from)
         {
             if (Map.GetCellMove((int)from.X, (int)from.Y))
                 return new Vector2(from.X + 1, from.Y);
-            return Vector2.Zero;
+            return from;
         }
     }
 }

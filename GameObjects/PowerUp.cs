@@ -1,4 +1,5 @@
 ﻿using BehaviourEngine;
+using BehaviourEngine.Interfaces;
 using OpenTK;
 using System;
 using System.Collections.Generic;
@@ -12,15 +13,18 @@ namespace BomberMan.GameObjects
     {
         SPEED = 0,
         HEALTH = 1,
-        FIRE = 2
     }
 
-    public class PowerUp : GameObject
+    public class PowerUp : GameObject, IPhysical, IPowerup
     {
         private SpriteRenderer renderer;
         private static readonly string[] powerUpsTextures;
 
-        static PowerUp()
+        public BoxCollider BoxCollider { get; set; }
+
+        private PowerUpType pType;
+
+        static PowerUp() //ok
         {
             powerUpsTextures = new string[]
             {
@@ -31,10 +35,29 @@ namespace BomberMan.GameObjects
 
         public PowerUp(Vector2 spawnPosition, PowerUpType type) : base((int)RenderLayer.Pawn, "Powerup")
         {
-            renderer = new SpriteRenderer(powerUpsTextures[(int)type], this);
+            this.pType = type;
+            renderer = new SpriteRenderer("Bomb", this);
+            AddBehaviour<SpriteRenderer>(renderer);
 
-            Console.WriteLine(type);
-            //AddBehaviour<SpriteRenderer>(renderer);
+            this.Transform.Position = spawnPosition;
+
+            BoxCollider = new BoxCollider(0.5f, 0.5f, this);
+            AddBehaviour<BoxCollider>(BoxCollider);
+
+            Engine.AddPhysicalObject(this);
+        }
+
+        public void ApplyPowerUp(IPowerupable mod)
+        {
+            if (pType == PowerUpType.HEALTH)
+                Console.WriteLine(mod.ApplyHealth(10)); 
+            else
+                mod.ApplySpeed(10.0f);
+        }
+
+        public void OnIntersect(IPhysical other)
+        {
+            //TODO: can also be ignored
         }
     }
 }

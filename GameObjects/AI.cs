@@ -1,8 +1,6 @@
-﻿using Aiv.Fast2D.Utils.Input;
-using BehaviourEngine;
+﻿using BehaviourEngine;
 using BehaviourEngine.Interfaces;
 using BehaviourEngine.Pathfinding;
-using BehaviourEngine.Renderer;
 using BomberMan.Behaviours;
 using OpenTK;
 using System;
@@ -49,7 +47,7 @@ namespace BomberMan.GameObjects
         {
             this.map    = map;
             this.Target = target;
-            renderer = new AnimationRenderer(this, FlyWeight.Get("Balloon"), ((int)(float)Math.Floor(18.5m)), 17, 4, new int[] { 0, 1, 2, 3 }, 0.2f, spawnPos, true, false);
+            renderer = new AnimationRenderer(this, FlyWeight.Get("Balloon"), ((int)(float)Math.Floor(18.5f)), 17, 4, new int[] { 0, 1, 2, 3 }, 0.2f, spawnPos, true, false);
             renderer.Owner.Transform.Position = spawnPos;
 
             BoxCollider = new BoxCollider(0.7f, 0.7f, this);
@@ -75,25 +73,6 @@ namespace BomberMan.GameObjects
             states.Add(currentState);
 
             AddBehaviour<UpdateStates>(new UpdateStates(this, states));
-       //     AddBehaviour<UpdateColliders>(new UpdateColliders(BoxCollider, this, new Vector2(.15f, .12f)));
-        }
-
-        private class CollisionHandler : Behaviour, IUpdatable
-        {
-            private GameObject owner;
-
-            public CollisionHandler(GameObject owner) : base(owner)
-            {
-                this.owner = owner;
-            }
-
-            public void Update()
-            {
-                //if(Engine.ComputeIntersect(Engine.Boxes, this.owner.GetComponent<Box2D>()))
-                //{
-                //    Console.WriteLine("collided!");
-                //}
-            }
         }
 
         public void ComputePath<T>(T item, int x, int y) where T : IMap
@@ -117,7 +96,7 @@ namespace BomberMan.GameObjects
         {
             if (other is Player)
             {
-                Console.WriteLine(this.ToString() + "Collided With:" + other.ToString());
+                //Console.WriteLine(this.ToString() + "Collided With:" + other.ToString());
             }
         }
 

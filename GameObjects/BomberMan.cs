@@ -15,37 +15,28 @@ public struct Stats
 {
     public float Speed;
     public int Health;
-
-    public Stats(float speed, int health)
-    {
-        this.Speed = speed;
-        this.Health = health;
-    }
 }
 
-public interface IModifier
+public interface IPowerupable
 {
     void ApplySpeed(float amount);
-    void ApplyHealth(int amount);
+    float ApplyHealth(int amount);
 }
 
 public interface IPowerup
 {
-    void ApplyPowerUp(IModifier powerup);
+    void ApplyPowerUp(IPowerupable mod);
 }
 
 namespace BomberMan.GameObjects
 {
-    public class Player : GameObject , IPhysical, IModifier
+    public class Player : GameObject , IPhysical, IPowerupable
     {
         //Animation dictionary
         private Dictionary<string, AnimationRenderer> renderer;
 
         //fms drop bomb
         private StateDrop drop;
-
-        //stats
-        private Stats stats;
 
         //fms walk state
         private WalkUp walkUp;
@@ -59,19 +50,23 @@ namespace BomberMan.GameObjects
 
         public BoxCollider BoxCollider { get; set; }
 
-        public Player(string fileName, Vector2 drawPosition) : base((int)RenderLayer.Pawn, "BomberMan")
+        //stats
+        private Stats stat;
+
+        public Player(string fileName, int health, float speed, Vector2 drawPosition) : base((int)RenderLayer.Pawn, "BomberMan")
         {
-            stats = new Stats()
+            stat.Speed = speed;
+            stat.Health = health;
 
             states = new List<IState>();
 
             renderer = new Dictionary<string, AnimationRenderer>();
             {
-                renderer.Add("WalkRight" , new AnimationRenderer(this, FlyWeight.Get(fileName), 29, 28, 15, new int[] { 3, 18, 33 }, 0.09f  , drawPosition, false, true, Vector2.One * 1.2f));
-                renderer.Add("WalkLeft"  , new AnimationRenderer(this, FlyWeight.Get(fileName), 29, 28, 15, new int[] { 1, 16, 31 }, 0.09f, drawPosition, false, true, Vector2.One * 1.2f));
-                renderer.Add("WalkDown"  , new AnimationRenderer(this, FlyWeight.Get(fileName), 29, 28, 15, new int[] { 0, 15, 30, 15 }, 0.09f, drawPosition, false, true, Vector2.One * 1.2f));
-                renderer.Add("WalkUp"    , new AnimationRenderer(this, FlyWeight.Get(fileName), 29, 28, 15, new int[] { 2, 17, 32 }, 0.09f, drawPosition, false, true, Vector2.One * 1.2f));
-                renderer.Add("Idle"      , new AnimationRenderer(this, FlyWeight.Get(fileName), 29, 28, 15, new int[] { 0 }, 0.09f, drawPosition, true, false, Vector2.One * 1.2f));
+                renderer.Add("WalkRight" , new AnimationRenderer(this, FlyWeight.Get(fileName), 29, 28, 15, new int[] { 3, 18, 33 }, 0.09f, drawPosition, false, true, false));
+                renderer.Add("WalkLeft"  , new AnimationRenderer(this, FlyWeight.Get(fileName), 29, 28, 15, new int[] { 1, 16, 31 }, 0.09f, drawPosition, false, true, false));
+                renderer.Add("WalkDown"  , new AnimationRenderer(this, FlyWeight.Get(fileName), 29, 28, 15, new int[] { 0, 15, 30, 15 }, 0.09f, drawPosition, false, true, false));
+                renderer.Add("WalkUp"    , new AnimationRenderer(this, FlyWeight.Get(fileName), 29, 28, 15, new int[] { 2, 17, 32 }, 0.09f, drawPosition, false, true, false));
+                renderer.Add("Idle"      , new AnimationRenderer(this, FlyWeight.Get(fileName), 29, 28, 15, new int[] { 0 }, 0.09f, drawPosition, true, false, false));
             };
             renderer.ToList().ForEach(item => Transform.Position = drawPosition);
 
@@ -132,14 +127,13 @@ namespace BomberMan.GameObjects
             states.Add(bombState);
 
             AddBehaviour<UpdateStates>(new UpdateStates(this, states));
-            AddBehaviour<Controller>(new Controller(this));
-            AddBehaviour<OnAABBChecker>(new OnAABBChecker(this));
+            AddBehaviour<CharacterController>(new CharacterController(speed, this));
         }
 
         [Obsolete("Method is deprecated.")]
         public void SetAnimation(string animation, Vector2 direction) => renderer[animation].Owner.Transform.Position = direction;
 
-        [Obsolete("This Method is deprecated, use the other overload instead.")]
+        [Obsolete("This Method is deprecated,  use the other overload instead.")]
         private void EnableAnimation(string name, bool stop, bool render)
         {
             renderer[name].Stop = stop;
@@ -165,16 +159,25 @@ namespace BomberMan.GameObjects
             {
                 //TODO: player collision
             }
+
+            if(other is IPowerup) 
+            {
+                //callback (:
+                IPowerup powerup = other as IPowerup;
+                powerup.ApplyPowerUp(this);
+            }
         }
 
         public void ApplySpeed(float amount)
         {
-
+            //track previous speed and sum it so we don't lose data
+            stat.Speed += amount;
         }
 
-        public void ApplyHealth(int amount)
+        public float ApplyHealth(int amount)
         {
-
+            //track back previous amount and sum it
+            return stat.Health += amount;
         }
 
         private class StateDrop : IState

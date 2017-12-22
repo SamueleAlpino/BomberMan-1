@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using BehaviourEngine;
 using OpenTK;
 using BehaviourEngine.Interfaces;
-using BehaviourEngine.Renderer;
-using Aiv.Fast2D.Utils.Input;
 
 namespace BomberMan.GameObjects
 {

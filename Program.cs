@@ -11,8 +11,6 @@ namespace BomberMan
         {
             Engine.Init(1255, 600, "BomberMan", 11);
 
-            new PowerUp(Vector2.Zero, PowerUpType.FIRE);
-
             Engine.Spawn(new Game());
 
             Engine.Run();
