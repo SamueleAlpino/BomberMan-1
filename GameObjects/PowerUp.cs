@@ -15,6 +15,14 @@ namespace BomberMan.GameObjects
         HEALTH = 1,
     }
 
+    public class PowerUpSpawner : GameObject
+    {
+        public PowerUpSpawner(int size, Vector2 position) : base((int)RenderLayer.Pawn, "PowerUp")
+        {
+            AddBehaviour<PowerUpManager>(new PowerUpManager(size, this));
+        }
+    }
+
     public class PowerUp : GameObject, IPhysical, IPowerup
     {
         private SpriteRenderer renderer;
@@ -52,10 +60,10 @@ namespace BomberMan.GameObjects
             speedRndValue = new float[]
             {
                 2.3f,
-                3.2f,
-                3.9f,
+                3.1f,
+                2.9f,
                 1.4f,
-                4.5f
+                2.5f
             };
         }
 
@@ -70,6 +78,21 @@ namespace BomberMan.GameObjects
         public void OnIntersect(IPhysical other)
         {
 
+        }
+    }
+
+    public class PowerUpManager : Behaviour
+    {
+        private PowerUp powerUp;
+
+        public PowerUpManager(int size, GameObject owner) : base(owner)
+        {
+            for (int i = 0; i < size; i++)
+            {
+                int randomPowerType = RandomManager.Instance.Random.Next((int)PowerUpType.SPEED, (int)PowerUpType.HEALTH);
+                powerUp = new PowerUp(Map.powerUpSpawnPoints[RandomManager.Instance.Random.Next(0, Map.powerUpSpawnPoints.Count)], (PowerUpType)randomPowerType);
+                Engine.Spawn(powerUp);
+            }
         }
     }
 }

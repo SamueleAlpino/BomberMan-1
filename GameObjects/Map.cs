@@ -11,17 +11,14 @@ namespace BomberMan.GameObjects
 {
     public class Map : GameObject, IMap
     {
-        public static Vector2 playerSpawnPos;
+        public static Vector2 PowerUpSpawnPoint { get; private set; }
+        private static Vector2 PlayerSpawnPoint { get; set; }
         private static int columnsid;
         private static int[] cellid;
 
-        public int[] CellsID
-        {
-            get
-            {
-                return cellid;
-            }
-        }
+        public static List<Vector2> powerUpSpawnPoints = new List<Vector2>();
+
+        public int[] CellsID => cellid;
 
         private Node[] mapNodes;
         private GenerateMap renderer;
@@ -33,13 +30,18 @@ namespace BomberMan.GameObjects
             columnsid = columns;
             cellid = cells.ToArray();
 
-      //      renderer = AddBehaviour<MapRenderer>(new MapRenderer(  cells, columns, this));
             updater  = AddBehaviour<GenerateMap>(new GenerateMap(this, cells, columns));
 
             for (int i = 0; i < cells.Count; i++)
             {
                 if (cells[i] == 5)
-                    playerSpawnPos = new Vector2(i % (columns - 1), i / (columns - 1));
+                    PlayerSpawnPoint = new Vector2(i % (columns - 1), i / (columns - 1));
+
+                if (cells[i] == 5 || cells[i] == 0)
+                {
+                    PowerUpSpawnPoint = new Vector2(i % (columns - 1), i / (columns - 1));
+                    powerUpSpawnPoints.Add(PowerUpSpawnPoint);
+                }
             }
 
             for (int y = 0; y < rows; y++)
@@ -50,7 +52,7 @@ namespace BomberMan.GameObjects
 
                     if (cells[indx] == 0 || cells[indx] == 5 || cells[indx] == 12)
                     {
-                        mapNodes[indx] = new Node(1, new Vector2(x, y), string.Format("Node[{0}] {1},{2}", indx, x, y));
+                        mapNodes[indx] = new Node(1, new Vector2(x, y));
                     }
                 }
             }
@@ -142,9 +144,6 @@ namespace BomberMan.GameObjects
                 return null;
 
             int index = y * (columnsid - 1) + x;
-            //if (cellid[index] == 3 || cellid[index] == 2)
-            //    return null;
-            //else
             return mapNodes[index];
         }
     }

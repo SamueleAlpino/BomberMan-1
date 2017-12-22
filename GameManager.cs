@@ -70,11 +70,11 @@ namespace BomberMan
                 Level.Load("Base0");
 
                 Stats stat = new Stats(10.0f, 10);
-                owner.player        = new Player("Bomberman", ref stat, Map.playerSpawnPos);
+                owner.player        = new Player("Bomberman", ref stat, Map.PowerUpSpawnPoint);
                 Engine.Spawn(new SpawnManager(owner.currentLevel.currentMap, owner.player));
 
                 //Spawn powerup test
-                Engine.Spawn(new PowerUp(new Vector2(3, 3), PowerUpType.SPEED));
+                Engine.Spawn(new PowerUpSpawner(2, Map.PowerUpSpawnPoint));
 
                 Engine.Spawn(owner.player);
 
