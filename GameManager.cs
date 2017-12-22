@@ -74,7 +74,7 @@ namespace BomberMan
                 Engine.Spawn(new SpawnManager(owner.currentLevel.currentMap, owner.player));
 
                 //Spawn powerup test
-                Engine.Spawn(new PowerUpSpawner(2, Map.PowerUpSpawnPoint));
+                Engine.Spawn(new PowerUpSpawner(2));
 
                 Engine.Spawn(owner.player);
 

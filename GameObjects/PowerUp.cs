@@ -17,9 +17,9 @@ namespace BomberMan.GameObjects
 
     public class PowerUpSpawner : GameObject
     {
-        public PowerUpSpawner(int size, Vector2 position) : base((int)RenderLayer.Pawn, "PowerUp")
+        public PowerUpSpawner(int numberOfPowerUps) : base((int)RenderLayer.Pawn, "PowerUp")
         {
-            AddBehaviour<PowerUpManager>(new PowerUpManager(size, this));
+            AddBehaviour<PowerUpManager>(new PowerUpManager(numberOfPowerUps, this));
         }
     }
 
