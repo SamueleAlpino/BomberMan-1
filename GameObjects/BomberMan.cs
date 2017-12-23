@@ -88,7 +88,7 @@ namespace BomberMan.GameObjects
             //  controller.Speed = speed;
 
             AddBehaviour<Move>(new Move(this));
-            BoxCollider = new BoxCollider(0.7f, 0.7f, this);
+            BoxCollider = new BoxCollider(1f, 1f, this);
             AddBehaviour<BoxCollider>(BoxCollider);
             Engine.AddPhysicalObject(this);
 

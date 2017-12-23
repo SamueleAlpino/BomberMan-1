@@ -42,7 +42,7 @@ namespace BomberMan
             if (moving)
             {
                 vDist = (nextPos - owner.Transform.Position).Length;
-                if (vDist < 0.2f)
+                if (vDist < 0.005f)
                 {
                     moving    = false;
                     canMoving = true;
