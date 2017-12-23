@@ -9,11 +9,13 @@ namespace BomberMan.Behaviours
 {
     public class CharacterController : Behaviour, IUpdatable
     {
+        public Vector2 OldPos { get; private set; }
+        public float        Speed { get; set; }
+
         private GameObject  owner;
         private bool        completed;
         private float       vDist;
         private Vector2     nextPos;
-        public float        Speed { get; set; }
 
 
         public CharacterController(GameObject owner) : base(owner)
@@ -47,13 +49,15 @@ namespace BomberMan.Behaviours
                 completed = true;
             }
 
+            OldPos = owner.Transform.Position;
+
             if (completed)
             {
-                vDist = (nextPos - owner.Transform.Position).Length;
+                vDist                    = (nextPos - owner.Transform.Position).Length;
                 owner.Transform.Position = Vector2.Lerp(owner.Transform.Position, nextPos, Time.DeltaTime * Speed);
                 if (vDist < 1f)
                 {
-                    nextPos = Vector2.Zero;
+                    nextPos   = Vector2.Zero;
                     completed = false;
                 }
             }
