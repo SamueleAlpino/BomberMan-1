@@ -79,6 +79,11 @@ namespace BomberMan.GameObjects
         {
 
         }
+
+        public void OnTriggerEnter(IPhysical other)
+        {
+
+        }
     }
 
     public class PowerUpManager : Behaviour

@@ -28,7 +28,7 @@ namespace BomberMan
             this.owner = owner;
             canMoving  = true;
             moving     = false;
-            Speed      = 5f;
+            Speed      = 9f;
         }
 
         public void Update()

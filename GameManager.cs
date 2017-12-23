@@ -73,8 +73,9 @@ namespace BomberMan
                 owner.player        = new Player("Bomberman", ref stat, Map.PowerUpSpawnPoint);
                 Engine.Spawn(new SpawnManager(owner.currentLevel.currentMap, owner.player));
 
-                //Spawn powerup test
-                Engine.Spawn(new PowerUpSpawner(2));
+                //this is the spawn of the powerups, need to be implemented in another behaviour under
+                //Behaviour folder.
+                //Engine.Spawn(new PowerUpSpawner(2));
 
                 Engine.Spawn(owner.player);
 

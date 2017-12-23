@@ -52,6 +52,7 @@ namespace BomberMan.GameObjects
 
             BoxCollider = new BoxCollider(0.7f, 0.7f, this);
             BoxCollider.Offset = new Vector2(0.2f, 0.2f);
+            BoxCollider.IsTrigger = true;
             Engine.AddPhysicalObject(this);
             AddBehaviour<BoxCollider>(BoxCollider);
 
@@ -98,6 +99,11 @@ namespace BomberMan.GameObjects
             {
                 //Console.WriteLine(this.ToString() + "Collided With:" + other.ToString());
             }
+        }
+
+        public void OnTriggerEnter(IPhysical other)
+        {
+
         }
 
         private class ChaseState : IState
@@ -163,7 +169,7 @@ namespace BomberMan.GameObjects
                     if (targetPos != owner.Transform.Position)
                     {
                         Vector2 direction = (targetPos - owner.Transform.Position).Normalized();
-                        owner.Transform.Position += direction * owner.Speed * Time.DeltaTime;
+                        owner.Transform.Position += direction * 2f * Time.DeltaTime;
                     }
            
                     float distance = (targetPos - owner.Transform.Position).Length;

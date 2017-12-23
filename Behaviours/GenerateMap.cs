@@ -26,11 +26,13 @@ namespace BomberMan
                 {
                     Vector2 pos = new Vector2(i % (columns - 1), i / (columns - 1));
                     GenerateTile("Obstacle", pos);
+                    //Need to change this one.
                 }
                 else if (cells[i] == 3)
                 {
                     Vector2 pos = new Vector2(i % (columns - 1), i / (columns - 1));
                     GenerateTile("Wall", pos);
+                    //i don't know 
                 }
            
             }

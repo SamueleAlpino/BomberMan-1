@@ -45,5 +45,10 @@ namespace BomberMan.GameObjects
         public void OnIntersect(IPhysical other)
         {
         }
+
+        public void OnTriggerEnter(IPhysical other)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

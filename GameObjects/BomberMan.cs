@@ -89,6 +89,7 @@ namespace BomberMan.GameObjects
 
             AddBehaviour<Move>(new Move(this));
             BoxCollider = new BoxCollider(1f, 1f, this);
+            BoxCollider.IsTrigger = true;
             AddBehaviour<BoxCollider>(BoxCollider);
             Engine.AddPhysicalObject(this);
 
@@ -197,6 +198,12 @@ namespace BomberMan.GameObjects
         {
             //track back previous amount and sum it
             return health += amount;
+        }
+
+        public void OnTriggerEnter(IPhysical other)
+        {
+            //Triggered
+            Console.WriteLine("Triggered!");
         }
 
         private class StateDrop : IState
