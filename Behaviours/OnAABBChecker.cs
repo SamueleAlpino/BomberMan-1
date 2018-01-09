@@ -11,6 +11,7 @@ namespace BomberMan
     public class OnAABBChecker : Behaviour, IUpdatable
     {
         private BoxCollider toCheck;
+
         public OnAABBChecker(GameObject owner) : base(owner)
         {
             try

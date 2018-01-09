@@ -151,7 +151,7 @@ namespace BomberMan.GameObjects
         [Obsolete("Method is deprecated.")]
         public void SetAnimation(string animation, Vector2 direction) => renderer[animation].Owner.Transform.Position = direction;
 
-        [Obsolete("This Method is deprecated,  use the other overload instead.")]
+        [Obsolete("This Method is deprecated, use the other overload instead.")]
         private void EnableAnimation(string name, bool stop, bool render)
         {
             renderer[name].Stop = stop;
@@ -190,7 +190,6 @@ namespace BomberMan.GameObjects
         {
             //track previous speed and sum it so we don't lose data
             float finalSpeed = speed += amount;
-         //   this.GetComponent<CharacterController>().Speed = finalSpeed;
             this.GetComponent<Move>().Speed = finalSpeed;
         }
 

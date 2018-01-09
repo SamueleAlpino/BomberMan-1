@@ -70,7 +70,7 @@ namespace BomberMan
                 Level.Load("Base0");
 
                 Stats stat = new Stats(10.0f, 10);
-                owner.player        = new Player("Bomberman", ref stat, Map.PowerUpSpawnPoint);
+                owner.player        = new Player("Bomberman", ref stat, Map.PlayerSpawnPoint);
                 Engine.Spawn(new SpawnManager(owner.currentLevel.currentMap, owner.player));
 
                 //this is the spawn of the powerups, need to be implemented in another behaviour under

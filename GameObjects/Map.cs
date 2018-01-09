@@ -12,7 +12,7 @@ namespace BomberMan.GameObjects
     public class Map : GameObject, IMap
     {
         public static Vector2 PowerUpSpawnPoint { get; private set; }
-        private static Vector2 PlayerSpawnPoint { get; set; }
+        public static Vector2 PlayerSpawnPoint { get; set; }
         private static int columnsid;
         private static int[] cellid;
 
