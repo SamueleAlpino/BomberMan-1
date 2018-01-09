@@ -12,6 +12,8 @@ namespace BomberMan.Behaviours
 {
     public class RollBack : Behaviour, IUpdatable
     {
+        public Vector2 Offset;
+
         private GameObject owner;
         private BoxCollider box;
 
@@ -29,12 +31,12 @@ namespace BomberMan.Behaviours
 
             Vector2 oldPos = box.Position;
 
-            box.Position = owner.Transform.Position;
+            box.Position = owner.Transform.Position + Offset;
 
             bool prev = CheckCollision((IPhysical)owner, Engine.PhysicalObjects);
 
              if (!prev) return;
-             owner.Transform.Position = oldPos;
+             owner.Transform.Position = oldPos - Offset;
               box.Position = oldPos;
         }
 

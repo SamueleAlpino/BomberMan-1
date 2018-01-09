@@ -65,7 +65,7 @@ namespace BomberMan.GameObjects
         private int health;
 
         private CharacterController controller;
-
+        private RollBack rollBack;
         public Player(string fileName, ref Stats stat, Vector2 drawPosition) : base((int)RenderLayer.Pawn, "BomberMan")
         {
             speed = stat.Speed;
@@ -144,7 +144,10 @@ namespace BomberMan.GameObjects
             //add states to collection
             states.Add(walkState);
             states.Add(bombState);
-            AddBehaviour<RollBack>(new RollBack(this, BoxCollider));
+
+            rollBack = new RollBack(this, BoxCollider);
+            rollBack.Offset = new Vector2(0.1f,0.2f);
+            AddBehaviour<RollBack>(rollBack);
             AddBehaviour<UpdateStates>(new UpdateStates(this, states));
         }
 
