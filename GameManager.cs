@@ -108,8 +108,9 @@ namespace BomberMan
 
             private void InitObjectPooling()
             {
-                Pool<Bomb>.Register(() => new Bomb(owner.player.Transform.Position), 100);
+                Pool<Bomb>.Register( () => new Bomb(owner.player.Transform.Position), 100);
                 Pool<PowerUp>.Register( () => new PowerUp(Vector2.Zero, PowerUpType.SPEED), 100);
+                Pool<Explosion>.Register(() => new Explosion(Vector2.Zero));
             }
         }
 

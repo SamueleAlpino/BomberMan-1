@@ -8,6 +8,7 @@ namespace BomberMan.GameObjects
 {
     public class Bomb : GameObject
     {
+        public List<Explosion> explosionList = new List<Explosion>();
         private Dictionary<string, AnimationRenderer> renderer;
         private List<AnimationRenderer> xplosion = new List<AnimationRenderer>();
         private List<BoxCollider> colliders      = new List<BoxCollider>();
@@ -129,16 +130,18 @@ namespace BomberMan.GameObjects
                 {
                     owner.locations = GetAdjacentLocation(owner.Transform.Position);
 
-               //     owner.locations.ForEach( x => explosion = new Explosion(owner, x));
+                    owner.locations.ForEach(x => explosion = new Explosion(x));
 
-     //               for (int i = 0; i < owner.locations.Count; i++)
-     //               {
-     //                   explosion = Pool<Explosion>.GetInstance( x =>
-     //                   {
-     //                       x.Transform.Position = owner.locations[i];
-     //                       x.Active             = true;
-     //                   });
-     //               }
+                    for (int i = 0; i < owner.locations.Count; i++)
+                    {
+                       explosion = Pool<Explosion>.GetInstance(x =>
+                       {
+                           x.Transform.Position = owner.locations[i];
+                           x.Active = true;
+                       });
+
+                        owner.explosionList.Add(explosion);
+                    }
 
                     owner.Exploding = false;
                 }
@@ -148,6 +151,17 @@ namespace BomberMan.GameObjects
 
                 if (!timer.IsActive)
                 {
+                    for (int i = 0; i < owner.explosionList.Count; i++)
+                    {
+                        Pool<Explosion>.RecycleInstance
+                       (
+                           owner.explosionList[i], x =>
+                           {
+                               x.Reset();
+                           }
+                       );
+                    }
+
                     Pool<Bomb>.RecycleInstance
                     (
                         owner, x =>
@@ -155,14 +169,7 @@ namespace BomberMan.GameObjects
                             x.Active = false;
                         }
                     );
-          //          Pool<Explosion>.RecycleInstance
-          //          (
-          //              explosion, x =>
-          //              {
-          //                  x.Active = false;
-          //                  x.Transform.Position = new Vector2(3,3);
-          //              }
-          //          );
+
                     Next.OnStateEnter();
                     return Next;
                 }
