@@ -81,6 +81,10 @@ namespace BomberMan.GameObjects
 
         public void OnIntersect(IPhysical other)
         {
+            if (other is Player)
+            {
+                Pool<PowerUp>.RecycleInstance(this, x => x.Active = false);
+            }
 
         }
 

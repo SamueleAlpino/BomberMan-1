@@ -1,5 +1,6 @@
 ﻿using BehaviourEngine;
 using BehaviourEngine.Interfaces;
+using BomberMan.GameObjects;
 using OpenTK;
 using System;
 using System.Collections.Generic;
@@ -41,7 +42,7 @@ namespace BomberMan.Behaviours
         {
             for (int i = 0; i < boxes.Count; i++)
             {
-                if (box.BoxCollider != boxes[i].BoxCollider)
+                if (box.BoxCollider != boxes[i].BoxCollider && boxes[i].GetType() != typeof(PowerUp))
                 {
                     if (PhysicsManager.Intersect(box.BoxCollider, boxes[i].BoxCollider))
                     {

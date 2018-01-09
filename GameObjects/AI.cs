@@ -172,7 +172,7 @@ namespace BomberMan.GameObjects
                     if (targetPos != owner.Transform.Position)
                     {
                         Vector2 direction = (targetPos - owner.Transform.Position).Normalized();
-                        owner.Transform.Position += direction * 2f * Time.DeltaTime;
+                        owner.Transform.Position += direction * 1.5f * Time.DeltaTime;
                     }
            
                     float distance = (targetPos - owner.Transform.Position).Length;

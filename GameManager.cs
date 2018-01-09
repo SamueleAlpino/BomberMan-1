@@ -69,7 +69,7 @@ namespace BomberMan
                 owner.currentLevel = new Level(Engine.LevelPath + "/Level00" + ".csv", "Base0", 0);
                 Level.Load("Base0");
 
-                Stats stat = new Stats(10.0f, 10);
+                Stats stat = new Stats(3f, 10);
                 owner.player        = new Player("Bomberman", ref stat, Map.PlayerSpawnPoint);
                 Engine.Spawn(new SpawnManager(owner.currentLevel.currentMap, owner.player));
 
