@@ -75,7 +75,7 @@ namespace BomberMan
 
                 //this is the spawn of the powerups, need to be implemented in another behaviour under
                 //Behaviour folder.
-                //Engine.Spawn(new PowerUpSpawner(2));
+                Engine.Spawn(new PowerUpSpawner(2));
 
                 Engine.Spawn(owner.player);
 

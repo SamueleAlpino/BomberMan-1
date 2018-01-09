@@ -5,88 +5,101 @@ using BehaviourEngine.Interfaces;
 using BomberMan.GameObjects;
 using OpenTK;
 
-namespace BomberMan.Behaviours
+namespace BomberMan
 {
     public class CharacterController : Behaviour, IUpdatable
     {
-        public Vector2 OldPos { get; private set; }
-        public float        Speed { get; set; }
+        public float Speed { get; set; }
 
-        private GameObject  owner;
-        private bool        completed;
-        private float       vDist;
-        private Vector2     nextPos;
+        private bool canMoving;
+        private bool moving;
+        private Vector2 nextPos;
+        private GameObject owner;
+        private float vDist;
 
 
         public CharacterController(GameObject owner) : base(owner)
         {
             this.owner = owner;
+            canMoving  = true;
+            moving     = false;
         }
 
         public void Update()
         {
-            if (Input.IsKeyPressed(KeyCode.W))
+            if (canMoving)
             {
-                nextPos = GetNextLocationUp(owner.Transform.Position);
-                completed = true;
+                nextPos = owner.Transform.Position;
+                MovePlayer();
             }
 
-            else if(Input.IsKeyPressed(KeyCode.S))
+            if (moving)
             {
-                nextPos = GetNextLocationDown(owner.Transform.Position);
-                completed = true;
-            }
-
-            else if (Input.IsKeyPressed(KeyCode.A))
-            {
-                nextPos = GetNextLocationLeft(owner.Transform.Position);
-                completed = true;
-            }
-
-            else if (Input.IsKeyPressed(KeyCode.D))
-            {
-                nextPos = GetNextLocationRight(owner.Transform.Position);
-                completed = true;
-            }
-
-            OldPos = owner.Transform.Position;
-
-            if (completed)
-            {
-                vDist                    = (nextPos - owner.Transform.Position).Length;
-                owner.Transform.Position = Vector2.Lerp(owner.Transform.Position, nextPos, Time.DeltaTime * Speed);
-                if (vDist < 1f)
+                vDist = (nextPos - owner.Transform.Position).Length;
+                if (vDist < 0.005f)
                 {
-                    nextPos   = Vector2.Zero;
-                    completed = false;
+                    moving    = false;
+                    canMoving = true;
                 }
+                owner.Transform.Position = Vector2.Lerp(owner.Transform.Position, nextPos, Time.DeltaTime * Speed);
             }
+
+         
         }
 
+        private void MovePlayer()
+        {
+            if (Input.IsKeyPressed(KeyCode.W))
+            {
+                canMoving = false;
+                moving    = true;
+                nextPos   = GetNextLocationUp(owner.Transform.Position);
+            }
+            else if (Input.IsKeyPressed(KeyCode.S))
+            {
+                canMoving = false;
+                moving = true;
+                nextPos = GetNextLocationDown(owner.Transform.Position);
+            }
+            else if (Input.IsKeyPressed(KeyCode.A))
+            {
+                canMoving = false;
+                moving = true;
+                nextPos = GetNextLocationLeft(owner.Transform.Position);
+            }
+            else if (Input.IsKeyPressed(KeyCode.D))
+            {
+                canMoving = false;
+                moving = true;
+                nextPos = GetNextLocationRight(owner.Transform.Position);
+            }
+
+        }
         private Vector2 GetNextLocationUp(Vector2 from)
         {
-            if (Map.GetCellMove((int)from.X, (int)from.Y))
+            if (Map.GetCellMove((int)from.X, (int)from.Y - 1))
                 return new Vector2(from.X, from.Y - 1);
+
             return from;
         }
 
         private Vector2 GetNextLocationDown(Vector2 from)
         {
-            if (Map.GetCellMove((int)from.X, (int)from.Y))
+            if (Map.GetCellMove((int)from.X, (int)from.Y + 1))
                 return new Vector2(from.X, from.Y + 1);
             return from;
         }
 
         private Vector2 GetNextLocationLeft(Vector2 from)
         {
-            if (Map.GetCellMove((int)from.X, (int)from.Y))
+            if (Map.GetCellMove((int)from.X - 1, (int)from.Y))
                 return new Vector2(from.X - 1, from.Y);
             return from;
         }
 
         private Vector2 GetNextLocationRight(Vector2 from)
         {
-            if (Map.GetCellMove((int)from.X, (int)from.Y))
+            if (Map.GetCellMove((int)from.X + 1, (int)from.Y))
                 return new Vector2(from.X + 1, from.Y);
             return from;
         }

@@ -84,10 +84,10 @@ namespace BomberMan.GameObjects
             renderer.ToList().ForEach(item => AddBehaviour<AnimationRenderer>(item.Value));
 
             //controller
-            //  controller       = new CharacterController(this);
-            //  controller.Speed = speed;
+            controller       = new CharacterController(this);
+            controller.Speed = speed;
 
-            AddBehaviour<Move>(new Move(this));
+            AddBehaviour<CharacterController>(new CharacterController(this));
             BoxCollider = new BoxCollider(1f, 1f, this);
             BoxCollider.IsTrigger = true;
             AddBehaviour<BoxCollider>(BoxCollider);
@@ -144,7 +144,7 @@ namespace BomberMan.GameObjects
             states.Add(bombState);
 
             AddBehaviour<UpdateStates>(new UpdateStates(this, states));
-        //    AddBehaviour<CharacterController>(controller);
+            AddBehaviour<CharacterController>(controller);
         }
 
 
@@ -190,7 +190,7 @@ namespace BomberMan.GameObjects
         {
             //track previous speed and sum it so we don't lose data
             float finalSpeed = speed += amount;
-            this.GetComponent<Move>().Speed = finalSpeed;
+            this.GetComponent<CharacterController>().Speed = finalSpeed;
         }
 
         public float ApplyHealth(int amount)
