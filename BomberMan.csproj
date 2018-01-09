@@ -68,6 +68,7 @@
     <Compile Include="GameObjects\PowerUp.cs" />
     <Compile Include="LevelManager.cs" />
     <Compile Include="Behaviours\GenerateMap.cs" />
+    <Compile Include="UpdateCollider.cs" />
     <None Include="Levels\Level00.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

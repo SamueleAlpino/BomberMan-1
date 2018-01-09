@@ -42,6 +42,7 @@ namespace BomberMan.GameObjects
         private IState              currentState;
         private IMap                map;
         private List<IState>        states = new List<IState>();
+        private UpdateCollider      boxMng;
 
         public AI(Vector2 spawnPos, IMap map, Transform target) : base((int)RenderLayer.Pawn, "AI")
         {
@@ -51,7 +52,7 @@ namespace BomberMan.GameObjects
             renderer.Owner.Transform.Position = spawnPos;
 
             BoxCollider = new BoxCollider(0.8f, 0.8f, this);
-            BoxCollider.Offset = new Vector2(0.1f, 0.1f);
+            
             Engine.AddPhysicalObject(this);
             AddBehaviour<BoxCollider>(BoxCollider);
 
@@ -72,6 +73,9 @@ namespace BomberMan.GameObjects
 
             states.Add(currentState);
 
+            boxMng = new UpdateCollider(this);
+            boxMng.Offset = new Vector2(0.1f, 0.1f);
+            AddBehaviour<UpdateCollider>(boxMng);
             AddBehaviour<UpdateStates>(new UpdateStates(this, states));
         }
 

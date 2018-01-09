@@ -25,13 +25,13 @@ namespace BomberMan.GameObjects
 
     public class PowerUp : GameObject, IPhysical, IPowerup
     {
-        private SpriteRenderer renderer;
-        private static readonly string[] powerUpsTextures;
-
         public BoxCollider BoxCollider { get; set; }
 
         public PowerUpType pType;
 
+        private SpriteRenderer renderer;
+        private static readonly string[] powerUpsTextures;
+        private UpdateCollider boxMng;
         //values for health and speed pUps
         private float[] speedRndValue;
 
@@ -53,9 +53,12 @@ namespace BomberMan.GameObjects
             this.Transform.Position = spawnPosition;
 
             BoxCollider = new BoxCollider(0.5f, 0.5f, this);
-            BoxCollider.Offset = new Vector2(0.25f,0.25f);
+           
             AddBehaviour<BoxCollider>(BoxCollider);
 
+            boxMng = new UpdateCollider(this);
+            boxMng.Offset = new Vector2(0.25f, 0.25f);
+            AddBehaviour<UpdateCollider>(boxMng);
             Engine.AddPhysicalObject(this);
 
             speedRndValue = new float[]
