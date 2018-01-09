@@ -26,28 +26,25 @@ namespace BomberMan.GameObjects
     public class PowerUp : GameObject, IPhysical, IPowerup
     {
         public BoxCollider BoxCollider { get; set; }
+        public  readonly string[] PowerUpsTextures;
 
         public PowerUpType pType;
 
         private SpriteRenderer renderer;
-        private static readonly string[] powerUpsTextures;
         private UpdateCollider boxMng;
         //values for health and speed pUps
         private float[] speedRndValue;
 
-        static PowerUp() //ok
+        public PowerUp(Vector2 spawnPosition, PowerUpType type) : base((int)RenderLayer.Pawn, "Powerup")
         {
-            powerUpsTextures = new string[]
+            PowerUpsTextures = new string[]
             {
                 "Bomb",
                 "Explosion",
             };
-        }
 
-        public PowerUp(Vector2 spawnPosition, PowerUpType type) : base((int)RenderLayer.Pawn, "Powerup")
-        {
             this.pType = type;
-            renderer = new SpriteRenderer(powerUpsTextures[(int)pType], this);
+            renderer = new SpriteRenderer(PowerUpsTextures[(int)pType], this);
             AddBehaviour<SpriteRenderer>(renderer);
 
             this.Transform.Position = spawnPosition;
@@ -106,6 +103,7 @@ namespace BomberMan.GameObjects
                 {
                     x.Transform.Position = Map.powerUpSpawnPoints[RandomManager.Instance.Random.Next(0, Map.powerUpSpawnPoints.Count)];
                     x.pType = (PowerUpType)RandomManager.Instance.Random.Next(0, 2);
+                    x.GetComponent<SpriteRenderer>().SetTexture(x.PowerUpsTextures[RandomManager.Instance.Random.Next(0, 2)]);
                 }));
             }
         }

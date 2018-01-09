@@ -70,7 +70,7 @@ namespace BomberMan
                 Level.Load("Base0");
 
                 Stats stat = new Stats(3f, 10);
-                owner.player        = new Player("Bomberman", ref stat, Map.PlayerSpawnPoint);
+                owner.player   = new Player("Bomberman", ref stat, Map.PlayerSpawnPoint);
                 Engine.Spawn(new SpawnManager(owner.currentLevel.currentMap, owner.player));
 
                 InitObjectPooling();
