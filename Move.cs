@@ -78,28 +78,29 @@ namespace BomberMan
         }
         private Vector2 GetNextLocationUp(Vector2 from)
         {
-            if (Map.GetCellMove((int)from.X, (int)from.Y))
+            if (Map.GetCellMove((int)from.X, (int)from.Y - 1))
                 return new Vector2(from.X, from.Y - 1);
+
             return from;
         }
 
         private Vector2 GetNextLocationDown(Vector2 from)
         {
-            if (Map.GetCellMove((int)from.X, (int)from.Y))
+            if (Map.GetCellMove((int)from.X, (int)from.Y + 1))
                 return new Vector2(from.X, from.Y + 1);
             return from;
         }
 
         private Vector2 GetNextLocationLeft(Vector2 from)
         {
-            if (Map.GetCellMove((int)from.X, (int)from.Y))
+            if (Map.GetCellMove((int)from.X - 1, (int)from.Y))
                 return new Vector2(from.X - 1, from.Y);
             return from;
         }
 
         private Vector2 GetNextLocationRight(Vector2 from)
         {
-            if (Map.GetCellMove((int)from.X, (int)from.Y))
+            if (Map.GetCellMove((int)from.X + 1, (int)from.Y))
                 return new Vector2(from.X + 1, from.Y);
             return from;
         }
