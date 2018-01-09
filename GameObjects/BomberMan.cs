@@ -185,6 +185,8 @@ namespace BomberMan.GameObjects
                 IPowerup powerup = other as IPowerup;
                 powerup.ApplyPowerUp(this);
             }
+
+
         }
 
         public void ApplySpeed(float amount)

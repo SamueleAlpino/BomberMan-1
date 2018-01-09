@@ -30,7 +30,7 @@ namespace BomberMan.GameObjects
 
         public BoxCollider BoxCollider { get; set; }
 
-        private PowerUpType pType;
+        public PowerUpType pType;
 
         //values for health and speed pUps
         private float[] speedRndValue;
@@ -39,15 +39,15 @@ namespace BomberMan.GameObjects
         {
             powerUpsTextures = new string[]
             {
-                "Speed",
-                "Health",
+                "Bomb",
+                "Explosion",
             };
         }
 
         public PowerUp(Vector2 spawnPosition, PowerUpType type) : base((int)RenderLayer.Pawn, "Powerup")
         {
             this.pType = type;
-            renderer = new SpriteRenderer("Bomb", this);
+            renderer = new SpriteRenderer(powerUpsTextures[(int)pType], this);
             AddBehaviour<SpriteRenderer>(renderer);
 
             this.Transform.Position = spawnPosition;
@@ -95,9 +95,11 @@ namespace BomberMan.GameObjects
         {
             for (int i = 0; i < size; i++)
             {
-                int randomPowerType = RandomManager.Instance.Random.Next((int)PowerUpType.SPEED, (int)PowerUpType.HEALTH);
-                powerUp = new PowerUp(Map.powerUpSpawnPoints[RandomManager.Instance.Random.Next(0, Map.powerUpSpawnPoints.Count)], (PowerUpType)randomPowerType);
-                Engine.Spawn(powerUp);
+                Engine.Spawn(Pool<PowerUp>.GetInstance(x =>
+                {
+                    x.Transform.Position = Map.powerUpSpawnPoints[RandomManager.Instance.Random.Next(0, Map.powerUpSpawnPoints.Count)];
+                    x.pType = (PowerUpType)RandomManager.Instance.Random.Next(0, 2);
+                }));
             }
         }
     }

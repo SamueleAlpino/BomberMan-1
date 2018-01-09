@@ -73,13 +73,12 @@ namespace BomberMan
                 owner.player        = new Player("Bomberman", ref stat, Map.PlayerSpawnPoint);
                 Engine.Spawn(new SpawnManager(owner.currentLevel.currentMap, owner.player));
 
-                //this is the spawn of the powerups, need to be implemented in another behaviour under
-                //Behaviour folder.
-                Engine.Spawn(new PowerUpSpawner(2));
+                InitObjectPooling();
+
+                Engine.Spawn(new PowerUpSpawner(6));
 
                 Engine.Spawn(owner.player);
 
-                InitObjectPooling();
 
                 OnStateUpdate();
             }
@@ -110,6 +109,7 @@ namespace BomberMan
             private void InitObjectPooling()
             {
                 Pool<Bomb>.Register(() => new Bomb(owner.player.Transform.Position), 100);
+                Pool<PowerUp>.Register( () => new PowerUp(Vector2.Zero, PowerUpType.SPEED), 100);
             }
         }
 
