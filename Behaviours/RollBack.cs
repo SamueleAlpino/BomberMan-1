@@ -24,16 +24,34 @@ namespace BomberMan.Behaviours
         {
             //TODO: need to refactor this rollback collision
 
-            //if (box == null || owner == null) return;
-            //Vector2 oldPos = box.Position;
+            if (box == null || owner == null) return;
 
-            //box.Position = owner.Transform.Position;
+            Vector2 oldPos = box.Position;
 
-            //bool prev = Engine.ComputeIntersect(Engine.levelColliders, owner.GetComponent<Box2D>());
+            box.Position = owner.Transform.Position;
 
-            //if (!prev) return;
-            //owner.Transform.Position = oldPos;
-            //box.Position = oldPos;
+            bool prev = CheckCollision((IPhysical)owner, Engine.PhysicalObjects);
+
+             if (!prev) return;
+             owner.Transform.Position = oldPos;
+              box.Position = oldPos;
+        }
+
+        private bool CheckCollision(IPhysical box, List<IPhysical> boxes)
+        {
+            for (int i = 0; i < boxes.Count; i++)
+            {
+                if (box.BoxCollider != boxes[i].BoxCollider)
+                {
+                    if (PhysicsManager.Intersect(box.BoxCollider, boxes[i].BoxCollider))
+                    {
+                        Console.WriteLine("ciaone proprio");
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
     }
 }

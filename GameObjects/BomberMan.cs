@@ -90,7 +90,7 @@ namespace BomberMan.GameObjects
             controller.Speed = speed;
             AddBehaviour<CharacterController>(controller);
 
-            BoxCollider = new BoxCollider(1f, 1f, this);
+            BoxCollider = new BoxCollider(0.5f, 0.5f, this);
             AddBehaviour<BoxCollider>(BoxCollider);
 
             Engine.AddPhysicalObject(this);
@@ -144,7 +144,7 @@ namespace BomberMan.GameObjects
             //add states to collection
             states.Add(walkState);
             states.Add(bombState);
-
+            AddBehaviour<RollBack>(new RollBack(this, BoxCollider));
             AddBehaviour<UpdateStates>(new UpdateStates(this, states));
         }
 

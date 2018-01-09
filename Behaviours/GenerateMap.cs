@@ -44,8 +44,8 @@ namespace BomberMan
 
         private void GenerateTile(string fileName, Vector2 position)
         {
-            Tile tile               = new Tile(fileName);
-            tile.Transform.Position = position;
+            Tile tile               = new Tile(fileName, position);
+         //   tile.Transform.Position = position;
             Engine.AddPhysicalObject(tile);
             GameObject t            = Engine.Spawn(tile);
         }
