@@ -39,6 +39,9 @@ namespace BomberMan.GameObjects
 {
     public class Player : GameObject , IPhysical, IPowerupable
     {
+        public BoxCollider BoxCollider { get; set; }
+
+
         //Animation dictionary
         private Dictionary<string, AnimationRenderer> renderer;
 
@@ -46,7 +49,7 @@ namespace BomberMan.GameObjects
         private StateDrop drop;
 
         //fms walk state
-        private WalkUp walkUp;
+        private WalkUp   walkUp;
         private WalkDown walkDown;
         private WalkLeft walkLeft;
         private WalkRight walkRight;
@@ -55,7 +58,6 @@ namespace BomberMan.GameObjects
         private IState bombState;
         private List<IState> states;
 
-        public BoxCollider BoxCollider { get; set; }
 
         //stats
         private Stats stat;
@@ -86,11 +88,11 @@ namespace BomberMan.GameObjects
             //controller
             controller       = new CharacterController(this);
             controller.Speed = speed;
+            AddBehaviour<CharacterController>(controller);
 
-            AddBehaviour<CharacterController>(new CharacterController(this));
             BoxCollider = new BoxCollider(1f, 1f, this);
-            BoxCollider.IsTrigger = true;
             AddBehaviour<BoxCollider>(BoxCollider);
+
             Engine.AddPhysicalObject(this);
 
             //init fsm
@@ -144,7 +146,6 @@ namespace BomberMan.GameObjects
             states.Add(bombState);
 
             AddBehaviour<UpdateStates>(new UpdateStates(this, states));
-            AddBehaviour<CharacterController>(controller);
         }
 
 

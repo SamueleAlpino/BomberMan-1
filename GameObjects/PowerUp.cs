@@ -53,6 +53,7 @@ namespace BomberMan.GameObjects
             this.Transform.Position = spawnPosition;
 
             BoxCollider = new BoxCollider(0.5f, 0.5f, this);
+            BoxCollider.Offset = new Vector2(0.25f,0.25f);
             AddBehaviour<BoxCollider>(BoxCollider);
 
             Engine.AddPhysicalObject(this);

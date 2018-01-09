@@ -10,6 +10,7 @@ namespace BomberMan
     public class CharacterController : Behaviour, IUpdatable
     {
         public float Speed { get; set; }
+        public Vector2 Direction { get; set; }
 
         private bool canMoving;
         private bool moving;
@@ -21,87 +22,37 @@ namespace BomberMan
         public CharacterController(GameObject owner) : base(owner)
         {
             this.owner = owner;
-            canMoving  = true;
-            moving     = false;
+            canMoving = true;
+            moving = false;
         }
-
         public void Update()
         {
-            if (canMoving)
-            {
-                nextPos = owner.Transform.Position;
-                MovePlayer();
-            }
-
-            if (moving)
-            {
-                vDist = (nextPos - owner.Transform.Position).Length;
-                if (vDist < 0.005f)
-                {
-                    moving    = false;
-                    canMoving = true;
-                }
-                owner.Transform.Position = Vector2.Lerp(owner.Transform.Position, nextPos, Time.DeltaTime * Speed);
-            }
-
-         
+            SetDirection();
+            owner.Transform.Position += Direction * Time.DeltaTime * Speed;
         }
 
-        private void MovePlayer()
+        private void SetDirection()
         {
-            if (Input.IsKeyPressed(KeyCode.W))
+            if (Input.IsKeyPressed(KeyCode.S))
             {
-                canMoving = false;
-                moving    = true;
-                nextPos   = GetNextLocationUp(owner.Transform.Position);
+                Direction = new Vector2(0, 1);
             }
-            else if (Input.IsKeyPressed(KeyCode.S))
+            else if (Input.IsKeyPressed(KeyCode.W))
             {
-                canMoving = false;
-                moving = true;
-                nextPos = GetNextLocationDown(owner.Transform.Position);
+                Direction = new Vector2(0, -1);
             }
             else if (Input.IsKeyPressed(KeyCode.A))
             {
-                canMoving = false;
-                moving = true;
-                nextPos = GetNextLocationLeft(owner.Transform.Position);
+                Direction = new Vector2(-1,0);
             }
             else if (Input.IsKeyPressed(KeyCode.D))
             {
-                canMoving = false;
-                moving = true;
-                nextPos = GetNextLocationRight(owner.Transform.Position);
+                Direction = new Vector2(1, 0);
             }
-
-        }
-        private Vector2 GetNextLocationUp(Vector2 from)
-        {
-            if (Map.GetCellMove((int)from.X, (int)from.Y - 1))
-                return new Vector2(from.X, from.Y - 1);
-
-            return from;
-        }
-
-        private Vector2 GetNextLocationDown(Vector2 from)
-        {
-            if (Map.GetCellMove((int)from.X, (int)from.Y + 1))
-                return new Vector2(from.X, from.Y + 1);
-            return from;
-        }
-
-        private Vector2 GetNextLocationLeft(Vector2 from)
-        {
-            if (Map.GetCellMove((int)from.X - 1, (int)from.Y))
-                return new Vector2(from.X - 1, from.Y);
-            return from;
-        }
-
-        private Vector2 GetNextLocationRight(Vector2 from)
-        {
-            if (Map.GetCellMove((int)from.X + 1, (int)from.Y))
-                return new Vector2(from.X + 1, from.Y);
-            return from;
+            else
+            {
+                Direction = Vector2.Zero;
+            }
         }
     }
 }
