@@ -48,7 +48,7 @@ namespace BomberMan.Behaviours
                 {
                     if (PhysicsManager.Intersect(box.BoxCollider, boxes[i].BoxCollider))
                     {
-                        Console.WriteLine("ciaone proprio");
+                        Console.WriteLine("Roll Back");
                         return true;
                     }
                 }

@@ -84,7 +84,6 @@ namespace BomberMan.GameObjects
             renderer.ToList().ForEach(item => Transform.Position = drawPosition);
 
             renderer.ToList().ForEach(item => AddBehaviour<AnimationRenderer>(item.Value));
-
             //controller
             controller       = new CharacterController(this);
             controller.Speed = speed;
@@ -177,16 +176,20 @@ namespace BomberMan.GameObjects
 
         public void OnIntersect(IPhysical other)
         {
-            if(other is Tile)
-            {
-                //TODO: player collision
-            }
-
             if(other is IPowerup) 
             {
                 //callback (:
                 IPowerup powerup = other as IPowerup;
                 powerup.ApplyPowerUp(this);
+
+                Pool<PowerUp>.RecycleInstance(powerup as PowerUp, x =>
+                {
+                    for (int i = 0; i < x.Behaviours.Count; i++)
+                    {
+                        x.Behaviours[i].Enabled = false;
+                    }
+                    x.Active = false;
+                });
             }
         }
 

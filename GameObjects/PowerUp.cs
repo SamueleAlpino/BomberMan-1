@@ -59,11 +59,11 @@ namespace BomberMan.GameObjects
 
             speedRndValue = new float[]
             {
-                .3f,
-                .1f,
-                .9f,
-                .4f,
-                .5f
+                1.3f,
+                1.5f,
+                1.9f,
+                1.4f,
+                1.5f
             };
         }
 
@@ -77,10 +77,7 @@ namespace BomberMan.GameObjects
 
         public void OnIntersect(IPhysical other)
         {
-            if (other is Player)
-            {
-                Pool<PowerUp>.RecycleInstance(this, x => { Engine.Destroy<GameObject>(x); });
-            }
+         
 
         }
 
@@ -104,6 +101,11 @@ namespace BomberMan.GameObjects
                         x.GetComponent<SpriteRenderer>().SetTexture(x.PowerUpsTextures[(int)PowerUpType.HEALTH]);
                     else
                         x.GetComponent<SpriteRenderer>().SetTexture(x.PowerUpsTextures[(int)PowerUpType.SPEED]);
+
+                    for (int component = 0; component < x.Behaviours.Count; component++)
+                    {
+                        x.Behaviours[component].Enabled = true;
+                    }
                 }));
             }
         }
