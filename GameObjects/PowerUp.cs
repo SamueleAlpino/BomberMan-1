@@ -35,7 +35,7 @@ namespace BomberMan.GameObjects
         //values for health and speed pUps
         private float[] speedRndValue;
 
-        public PowerUp(Vector2 spawnPosition, PowerUpType type) : base((int)RenderLayer.Pawn, "Powerup")
+        public PowerUp(Vector2 spawnPosition) : base((int)RenderLayer.Pawn, "Powerup")
         {
             PowerUpsTextures = new string[]
             {
@@ -43,7 +43,6 @@ namespace BomberMan.GameObjects
                 "Health",
             };
 
-            this.pType = type;
             renderer = new SpriteRenderer(PowerUpsTextures[(int)pType], this);
             AddBehaviour<SpriteRenderer>(renderer);
 

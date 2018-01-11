@@ -200,7 +200,9 @@ namespace BomberMan.GameObjects
         public float ApplyHealth(int amount)
         {
             //track back previous amount and sum it
-            return health += amount;
+            float finalHealth = health += amount;
+            Console.WriteLine(finalHealth);
+            return finalHealth;
         }
 
         public void OnTriggerEnter(IPhysical other)
