@@ -12,18 +12,13 @@ namespace BomberMan
         public float Speed { get; set; }
         public Vector2 Direction { get; set; }
 
-        private bool canMoving;
-        private bool moving;
-        private Vector2 nextPos;
         private GameObject owner;
-        private float vDist;
-
+        private bool play;
 
         public CharacterController(GameObject owner) : base(owner)
         {
             this.owner = owner;
-            canMoving = true;
-            moving = false;
+            play = false;
         }
         public void Update()
         {
@@ -35,24 +30,37 @@ namespace BomberMan
         {
             if (Input.IsKeyPressed(KeyCode.S))
             {
-                Direction = new Vector2(0, 1);
+                SetDirection(new Vector2(0, 1), AudioType.SOUND_WALK_SLOW);
             }
             else if (Input.IsKeyPressed(KeyCode.W))
             {
-                Direction = new Vector2(0, -1);
+                SetDirection(new Vector2(0, -1), AudioType.SOUND_WALK_SLOW);
             }
             else if (Input.IsKeyPressed(KeyCode.A))
             {
-                Direction = new Vector2(-1,0);
+                SetDirection(new Vector2(-1, 0), AudioType.SOUND_WALK_SLOW);
             }
             else if (Input.IsKeyPressed(KeyCode.D))
             {
-                Direction = new Vector2(1, 0);
+                SetDirection(new Vector2(1, 0), AudioType.SOUND_WALK_SLOW);
             }
             else
             {
                 Direction = Vector2.Zero;
+                play = false;
             }
+
+            if (!play)
+            {
+                AudioManager.Pause(AudioType.SOUND_WALK_SLOW);
+            }
+        }
+
+        private void SetDirection(Vector2 dir, AudioType type)
+        {
+            Direction = dir;
+            AudioManager.PlayClip(type);
+            play = false;
         }
     }
 }

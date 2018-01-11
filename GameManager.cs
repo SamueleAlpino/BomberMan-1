@@ -115,6 +115,12 @@ namespace BomberMan
 
                 AudioManager.AddSource(AudioType.SOUND_DROP);
                 AudioManager.AddClip("Sounds/Drop.ogg", AudioType.SOUND_DROP);
+
+                AudioManager.AddSource(AudioType.SOUND_WALK_FAST);
+                AudioManager.AddClip("Sounds/StepFast.ogg", AudioType.SOUND_WALK_FAST);
+
+                AudioManager.AddSource(AudioType.SOUND_WALK_SLOW);
+                AudioManager.AddClip("Sounds/StepSlow.ogg", AudioType.SOUND_WALK_SLOW);
             }
             private void InitObjectPooling()
             {

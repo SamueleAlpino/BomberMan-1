@@ -237,7 +237,8 @@ namespace BomberMan.GameObjects
             {
                 if (Input.IsKeyDown(KeyCode.Space) && !timer.IsActive)
                 {
-                   AudioManager.GetClip(AudioType.SOUND_DROP);
+                   AudioManager.PlayClip(AudioType.SOUND_DROP);
+                   
                    Engine.Spawn(Pool<Bomb>.GetInstance(x =>
                    {
                        x.Active = true;
