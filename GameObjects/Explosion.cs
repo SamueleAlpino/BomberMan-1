@@ -14,8 +14,10 @@ namespace BomberMan.GameObjects
 
     public class Explosion : GameObject, IPhysical
     {
-        private AnimationRenderer anim;
         public BoxCollider BoxCollider { get; set; }
+
+        private AnimationRenderer anim;
+        private UpdateCollider boxMng;
         private float lenght = 15f;
 
         public Explosion( Vector2 spawnPosition) : base((int)RenderLayer.Pawn, "Explosion")
@@ -34,11 +36,15 @@ namespace BomberMan.GameObjects
                 71, 72, 73, 74, 75
             }, lenght * Time.DeltaTime, spawnPosition, true, false);
 
-            BoxCollider = new BoxCollider(0.7f, 0.7f, this);
             anim.UpdatePosition = true;
-
-            this.AddBehaviour<AnimationRenderer>(anim);
+            BoxCollider = new BoxCollider(0.7f, 0.7f, this);
             AddBehaviour<BoxCollider>(BoxCollider);
+
+            boxMng        = new UpdateCollider(this);
+            boxMng.Offset = new Vector2(0.2f,0.2f);
+            AddBehaviour<UpdateCollider>(boxMng);
+
+            AddBehaviour<AnimationRenderer>(anim);
 
             Engine.AddPhysicalObject(this);
             Engine.Spawn(this);
@@ -53,6 +59,12 @@ namespace BomberMan.GameObjects
 
         public void OnIntersect(IPhysical other)
         {
+            if (other is AI)
+            {
+                // Test
+                Engine.Destroy(other as AI);
+               // Pool<AI>.RecycleInstance(other as AI, x => x.Active = false);
+            }
         }
 
         public void OnTriggerEnter(IPhysical other)

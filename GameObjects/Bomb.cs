@@ -137,7 +137,12 @@ namespace BomberMan.GameObjects
                        explosion = Pool<Explosion>.GetInstance(x =>
                        {
                            x.Transform.Position = owner.locations[i];
-                           x.Active = true;
+                           x.Active             = true;
+                           foreach (var component in x.Behaviours)
+                           {
+                               if(!component.Enabled)
+                                   component.Enabled = true;
+                           }
                        });
 
                         owner.explosionList.Add(explosion);
@@ -158,7 +163,14 @@ namespace BomberMan.GameObjects
                            owner.explosionList[i], x =>
                            {
                                x.Reset();
+                               // TODO : boxcolliders are not recycled
+                               foreach (var component in x.Behaviours)
+                               {
+                                   // TODO Register pool of Behaviours, i don't know if is this correct
+                                   Pool<Behaviour>.RecycleInstance(component, y => y.Enabled = false);
+                               }
                            }
+                           
                        );
                     }
 
@@ -168,6 +180,7 @@ namespace BomberMan.GameObjects
                         {
                             x.Active = false;
                         }
+
                     );
 
                     Next.OnStateEnter();
