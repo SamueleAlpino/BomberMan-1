@@ -32,8 +32,18 @@ namespace BomberMan.GameObjects
         }
 
         public BoxCollider BoxCollider { get; set; }
-
         public float          Speed = 1.4f;
+        public IMap Map
+        {
+            get
+            {
+                return map;
+            }
+            set
+            {
+                map = value;
+            }
+        }
 
         private AnimationRenderer   renderer;
         private PatrolState         patrol;
@@ -222,7 +232,19 @@ namespace BomberMan.GameObjects
             for (int i = 0; i < ids.Length; i++)
             {
                 if (ids[i] == 12)
-                    Engine.Spawn(new AI(new Vector2(i % columnsID, i / columnsID), map, owner.Transform));
+                    Engine.Spawn(Pool<AI>.GetInstance(x =>
+                    {
+                        x.Transform.Position = new Vector2(i % columnsID, i / columnsID);
+                        x.Map = map;
+                        x.Target = owner.Transform;
+
+                        for (int component = 0; component < x.Behaviours.Count; component++)
+                        {
+                            x.Behaviours[component].Enabled = true;
+                        }
+                    }));
+
+                    //Engine.Spawn(new AI(new Vector2(i % columnsID, i / columnsID), map, owner.Transform));
             }
         }
     }

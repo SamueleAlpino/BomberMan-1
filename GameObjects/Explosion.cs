@@ -62,7 +62,13 @@ namespace BomberMan.GameObjects
             if (other is AI)
             {
                 // Test
-                Engine.Destroy(other as AI);
+                Pool<AI>.RecycleInstance(other as AI, x =>
+                {
+                    for (int i = 0; i < x.Behaviours.Count; i++)
+                    {
+                        x.Behaviours[i].Enabled = false;
+                    }
+                });
                // Pool<AI>.RecycleInstance(other as AI, x => x.Active = false);
             }
         }

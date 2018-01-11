@@ -138,7 +138,7 @@ namespace BomberMan.GameObjects
                        {
                            x.Transform.Position = owner.locations[i];
                            x.Active             = true;
-                           foreach (var component in x.Behaviours)
+                           foreach (Behaviour component in x.Behaviours)
                            {
                                if(!component.Enabled)
                                    component.Enabled = true;
@@ -164,10 +164,11 @@ namespace BomberMan.GameObjects
                            {
                                x.Reset();
                                // TODO : boxcolliders are not recycled
-                               foreach (var component in x.Behaviours)
+                               foreach (Behaviour component in x.Behaviours)
                                {
+                                   component.Enabled = false;
                                    // TODO Register pool of Behaviours, i don't know if is this correct
-                                   Pool<Behaviour>.RecycleInstance(component, y => y.Enabled = false);
+                              //     Pool<Behaviour>.RecycleInstance(component, y => y.Enabled = false);
                                }
                            }
                            

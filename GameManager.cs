@@ -71,9 +71,10 @@ namespace BomberMan
 
                 Stats stat = new Stats(3f, 10);
                 owner.player   = new Player("Bomberman", ref stat, Map.PlayerSpawnPoint);
+                InitObjectPooling();
+
                 Engine.Spawn(new SpawnManager(owner.currentLevel.currentMap, owner.player));
 
-                InitObjectPooling();
 
                 Engine.Spawn(new PowerUpSpawner(5));
 
@@ -112,6 +113,7 @@ namespace BomberMan
                 Pool<Bomb>.Register( () => new Bomb(owner.player.Transform.Position), 100);
                 Pool<PowerUp>.Register( () => new PowerUp(Vector2.Zero), 100);
                 Pool<Explosion>.Register( () => new Explosion(Vector2.Zero));
+                Pool<AI>.Register(() => new AI(Vector2.Zero, null, null));
             }
         }
 
