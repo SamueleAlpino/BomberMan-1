@@ -188,8 +188,6 @@ namespace BomberMan.GameObjects
                 IPowerup powerup = other as IPowerup;
                 powerup.ApplyPowerUp(this);
             }
-
-
         }
 
         public void ApplySpeed(float amount)
@@ -202,7 +200,9 @@ namespace BomberMan.GameObjects
         public float ApplyHealth(int amount)
         {
             //track back previous amount and sum it
-            return health += amount;
+            float finalHealth = health += amount;
+            Console.WriteLine(finalHealth);
+            return finalHealth;
         }
 
         public void OnTriggerEnter(IPhysical other)

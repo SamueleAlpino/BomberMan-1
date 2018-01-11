@@ -75,10 +75,9 @@ namespace BomberMan
 
                 InitObjectPooling();
 
-                Engine.Spawn(new PowerUpSpawner(6));
+                Engine.Spawn(new PowerUpSpawner(5));
 
                 Engine.Spawn(owner.player);
-
 
                 OnStateUpdate();
             }
@@ -104,13 +103,15 @@ namespace BomberMan
                 FlyWeight.Add("Bomberman",  "Textures/bomberman.dat" );
                 FlyWeight.Add("Balloon",    "Textures/ballon.dat" );
                 FlyWeight.Add("expl2",      "Textures/expl2.dat" );
+                FlyWeight.Add("Health",      "Textures/Health.dat" );
+                FlyWeight.Add("Speed",      "Textures/Speed.dat" );
             }
 
             private void InitObjectPooling()
             {
                 Pool<Bomb>.Register( () => new Bomb(owner.player.Transform.Position), 100);
-                Pool<PowerUp>.Register( () => new PowerUp(Vector2.Zero, PowerUpType.SPEED), 100);
-                Pool<Explosion>.Register(() => new Explosion(Vector2.Zero));
+                Pool<PowerUp>.Register( () => new PowerUp(Vector2.Zero), 100);
+                Pool<Explosion>.Register( () => new Explosion(Vector2.Zero));
             }
         }
 

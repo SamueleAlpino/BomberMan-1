@@ -35,15 +35,14 @@ namespace BomberMan.GameObjects
         //values for health and speed pUps
         private float[] speedRndValue;
 
-        public PowerUp(Vector2 spawnPosition, PowerUpType type) : base((int)RenderLayer.Pawn, "Powerup")
+        public PowerUp(Vector2 spawnPosition) : base((int)RenderLayer.Pawn, "Powerup")
         {
             PowerUpsTextures = new string[]
             {
-                "Bomb",
-                "Explosion",
+                "Speed",
+                "Health",
             };
 
-            this.pType = type;
             renderer = new SpriteRenderer(PowerUpsTextures[(int)pType], this);
             AddBehaviour<SpriteRenderer>(renderer);
 
@@ -60,11 +59,11 @@ namespace BomberMan.GameObjects
 
             speedRndValue = new float[]
             {
-                2.3f,
-                3.1f,
-                2.9f,
-                1.4f,
-                2.5f
+                .3f,
+                .1f,
+                .9f,
+                .4f,
+                .5f
             };
         }
 
@@ -80,7 +79,7 @@ namespace BomberMan.GameObjects
         {
             if (other is Player)
             {
-                Pool<PowerUp>.RecycleInstance(this, x => x.Active = false);
+                Pool<PowerUp>.RecycleInstance(this, x => { Engine.Destroy<GameObject>(x); });
             }
 
         }
@@ -93,8 +92,6 @@ namespace BomberMan.GameObjects
 
     public class PowerUpManager : Behaviour
     {
-        private PowerUp powerUp;
-
         public PowerUpManager(int size, GameObject owner) : base(owner)
         {
             for (int i = 0; i < size; i++)
@@ -102,8 +99,11 @@ namespace BomberMan.GameObjects
                 Engine.Spawn(Pool<PowerUp>.GetInstance(x =>
                 {
                     x.Transform.Position = Map.powerUpSpawnPoints[RandomManager.Instance.Random.Next(0, Map.powerUpSpawnPoints.Count)];
-                    x.pType = (PowerUpType)RandomManager.Instance.Random.Next(0, 2);
-                    x.GetComponent<SpriteRenderer>().SetTexture(x.PowerUpsTextures[RandomManager.Instance.Random.Next(0, 2)]);
+                    x.pType = (PowerUpType)RandomManager.Instance.Random.Next(0, Enum.GetNames(typeof(PowerUpType)).Length);
+                    if(x.pType == PowerUpType.HEALTH)
+                        x.GetComponent<SpriteRenderer>().SetTexture(x.PowerUpsTextures[(int)PowerUpType.HEALTH]);
+                    else
+                        x.GetComponent<SpriteRenderer>().SetTexture(x.PowerUpsTextures[(int)PowerUpType.SPEED]);
                 }));
             }
         }
