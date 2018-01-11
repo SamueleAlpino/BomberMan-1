@@ -108,10 +108,7 @@ namespace BomberMan.GameObjects
             public StateExplode(Bomb owner)
             {
                 this.owner = owner;
-                timer = new Timer(3);
-           //     explosion        = new Explosion(owner, Vector2.Zero);
-           //     explosion.Active = false;
-           //     Pool<Explosion>.Register(()=> explosion);
+                timer = new Timer(1.8f);
             }
 
             public void OnStateEnter()
@@ -128,6 +125,7 @@ namespace BomberMan.GameObjects
             {
                 if (owner.Exploding)
                 {
+                    AudioManager.PlayClip(AudioType.SOUND_EXPLOSION);
                     owner.locations = GetAdjacentLocation(owner.Transform.Position);
 
                     owner.locations.ForEach(x => explosion = new Explosion(x));
@@ -163,12 +161,9 @@ namespace BomberMan.GameObjects
                            owner.explosionList[i], x =>
                            {
                                x.Reset();
-                               // TODO : boxcolliders are not recycled
                                foreach (Behaviour component in x.Behaviours)
                                {
                                    component.Enabled = false;
-                                   // TODO Register pool of Behaviours, i don't know if is this correct
-                              //     Pool<Behaviour>.RecycleInstance(component, y => y.Enabled = false);
                                }
                            }
                            

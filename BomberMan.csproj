@@ -40,6 +40,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\bubbleGhost\BehaviourEngine.Test\bin\Debug\aiv-fast2d-utils-input.dll</HintPath>
     </Reference>
+    <Reference Include="aiv-vorbis, Version=1.0.6195.38242, Culture=neutral, PublicKeyToken=null" />
     <Reference Include="OpenTK, Version=2.0.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
       <HintPath>packages\OpenTK.2.0.0\lib\net20\OpenTK.dll</HintPath>
     </Reference>
@@ -76,6 +77,12 @@
     <Compile Include="Behaviours\CharacterController.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="Sounds\Drop.ogg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Sounds\Explosion.ogg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Textures\ballon.dat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -118,9 +125,7 @@
       <Name>BehaviourEngine</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Sounds\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="Textures\bomberman.dat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

@@ -72,7 +72,7 @@ namespace BomberMan
                 Stats stat = new Stats(3f, 10);
                 owner.player   = new Player("Bomberman", ref stat, Map.PlayerSpawnPoint);
                 InitObjectPooling();
-
+                InitSound();
                 Engine.Spawn(new SpawnManager(owner.currentLevel.currentMap, owner.player));
 
 
@@ -108,6 +108,14 @@ namespace BomberMan
                 FlyWeight.Add("Speed",      "Textures/Speed.dat" );
             }
 
+            private void InitSound()
+            {
+                AudioManager.AddSource(AudioType.SOUND_EXPLOSION);
+                AudioManager.AddClip("Sounds/Explosion.ogg", AudioType.SOUND_EXPLOSION);
+
+                AudioManager.AddSource(AudioType.SOUND_DROP);
+                AudioManager.AddClip("Sounds/Drop.ogg", AudioType.SOUND_DROP);
+            }
             private void InitObjectPooling()
             {
                 Pool<Bomb>.Register( () => new Bomb(owner.player.Transform.Position), 100);
