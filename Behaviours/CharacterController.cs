@@ -60,7 +60,7 @@ namespace BomberMan
         {
             Direction = dir;
             AudioManager.PlayClip(type);
-            play = false;
+            play = true;
         }
     }
 }
