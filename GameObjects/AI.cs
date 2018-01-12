@@ -30,7 +30,7 @@ namespace BomberMan.GameObjects
                 return false;
             }
         }
-
+        public Vector2 Offset;
         public BoxCollider BoxCollider { get; set; }
         public float          Speed = 1.4f;
         public IMap Map
@@ -53,11 +53,12 @@ namespace BomberMan.GameObjects
         private IMap                map;
         private List<IState>        states = new List<IState>();
         private UpdateCollider      boxMng;
-
-        public AI(Vector2 spawnPos, IMap map, Transform target) : base((int)RenderLayer.Pawn, "AI")
+        
+        public AI(Vector2 spawnPos, IMap map, Transform target, Vector2 OffsetTarget) : base((int)RenderLayer.Pawn, "AI")
         {
             this.map    = map;
             this.Target = target;
+            this.Offset = OffsetTarget;
             renderer = new AnimationRenderer(this, FlyWeight.Get("Balloon"), ((int)(float)Math.Floor(18.5f)), 17, 4, new int[] { 0, 1, 2, 3 }, 0.2f, spawnPos, true, false);
             renderer.Owner.Transform.Position = spawnPos;
 
@@ -166,7 +167,7 @@ namespace BomberMan.GameObjects
 
             public IState OnStateUpdate()
             {
-                owner.ComputePath(owner.map, (int)owner.Target.Position.X, (int)owner.Target.Position.Y);
+                owner.ComputePath(owner.map, (int)(owner.Target.Position.X + owner.Offset.X), (int)(owner.Target.Position.Y + owner.Offset.X));
 
                 if (owner.CurrentPath == null)
                     return this;
@@ -238,7 +239,7 @@ namespace BomberMan.GameObjects
                         x.Transform.Position = new Vector2(i % columnsID, i / columnsID);
                         x.Map = map;
                         x.Target = owner.Transform;
-
+                        x.Offset = new Vector2(0.5f,0.5f);
                         for (int component = 0; component < x.Behaviours.Count; component++)
                         {
                             x.Behaviours[component].Enabled = true;

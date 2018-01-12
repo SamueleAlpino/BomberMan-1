@@ -133,7 +133,7 @@ namespace BomberMan
                 Pool<Bomb>.Register( () => new Bomb(owner.player.Transform.Position), 100);
                 Pool<PowerUp>.Register( () => new PowerUp(Vector2.Zero), 100);
                 Pool<Explosion>.Register( () => new Explosion(Vector2.Zero));
-                Pool<AI>.Register(() => new AI(Vector2.Zero, null, null));
+                Pool<AI>.Register(() => new AI(Vector2.Zero, null, null ,Vector2.Zero));
             }
         }
 
