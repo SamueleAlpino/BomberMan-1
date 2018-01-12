@@ -194,6 +194,10 @@ namespace BomberMan.GameObjects
                     x.Active = false;
                 });
             }
+            if (other is AI)
+            {
+                AudioManager.PlayClip(AudioType.SOUND_DIE);
+            }
         }
 
         public void ApplySpeed(float amount)

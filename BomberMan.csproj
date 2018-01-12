@@ -77,6 +77,9 @@
     <Compile Include="Behaviours\CharacterController.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="Sounds\Dead.ogg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Sounds\Drop.ogg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

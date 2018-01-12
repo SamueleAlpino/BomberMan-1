@@ -108,8 +108,9 @@ namespace BomberMan.GameObjects
 
         public void OnIntersect(IPhysical other)
         {
-            if (other is Player)
+            if (other is Explosion)
             {
+                AudioManager.PlayClip(AudioType.SOUND_DIE);
                 //Console.WriteLine(this.ToString() + "Collided With:" + other.ToString());
             }
         }
