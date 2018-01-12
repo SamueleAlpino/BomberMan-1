@@ -96,16 +96,16 @@ namespace BomberMan
 
             private void InitTextures()
             {
-                FlyWeight.Add("Wall",       "Textures/wall.dat");
-                FlyWeight.Add("Obstacle",   "Textures/obstacle.dat");
-                FlyWeight.Add("Warrior",    "Textures/warrior.dat");
-                FlyWeight.Add("Bomb",       "Textures/Bomb.dat");
-                FlyWeight.Add("Explosion",  "Textures/Explosion.dat");
-                FlyWeight.Add("Bomberman",  "Textures/bomberman.dat" );
-                FlyWeight.Add("Balloon",    "Textures/ballon.dat" );
-                FlyWeight.Add("expl2",      "Textures/expl2.dat" );
-                FlyWeight.Add("Health",      "Textures/Health.dat" );
-                FlyWeight.Add("Speed",      "Textures/Speed.dat" );
+                FlyWeight.Add( "Wall",       "Textures/wall.dat" );
+                FlyWeight.Add( "Obstacle",   "Textures/obstacle.dat" );
+                FlyWeight.Add( "Warrior",    "Textures/warrior.dat" );
+                FlyWeight.Add( "Bomb",       "Textures/Bomb.dat" );
+                FlyWeight.Add( "Explosion",  "Textures/Explosion.dat" );
+                FlyWeight.Add( "Bomberman",  "Textures/bomberman.dat" );
+                FlyWeight.Add( "Balloon",    "Textures/ballon.dat" );
+                FlyWeight.Add( "expl2",      "Textures/expl2.dat" );
+                FlyWeight.Add( "Health",     "Textures/Health.dat" );
+                FlyWeight.Add( "Speed",      "Textures/Speed.dat" );
             }
 
             private void InitSound()
@@ -121,6 +121,9 @@ namespace BomberMan
 
                 AudioManager.AddSource(AudioType.SOUND_WALK_SLOW);
                 AudioManager.AddClip("Sounds/StepSlow.ogg", AudioType.SOUND_WALK_SLOW);
+
+                AudioManager.AddSource(AudioType.SOUND_PICKUP);
+                AudioManager.AddClip("Sounds/Powerup.ogg", AudioType.SOUND_PICKUP);
             }
             private void InitObjectPooling()
             {

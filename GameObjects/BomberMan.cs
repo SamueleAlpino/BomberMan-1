@@ -178,6 +178,9 @@ namespace BomberMan.GameObjects
         {
             if(other is IPowerup) 
             {
+                //play audio on pickup
+                AudioManager.PlayClip(AudioType.SOUND_PICKUP);
+
                 //callback (:
                 IPowerup powerup = other as IPowerup;
                 powerup.ApplyPowerUp(this);
@@ -195,23 +198,18 @@ namespace BomberMan.GameObjects
 
         public void ApplySpeed(float amount)
         {
-            //track previous speed and sum it so we don't lose data
             float finalSpeed = speed += amount;
             this.GetComponent<CharacterController>().Speed = finalSpeed;
         }
 
         public float ApplyHealth(int amount)
         {
-            //track back previous amount and sum it
             float finalHealth = health += amount;
-            Console.WriteLine(finalHealth);
             return finalHealth;
         }
 
         public void OnTriggerEnter(IPhysical other)
         {
-            //Triggered
-            Console.WriteLine("Triggered!");
         }
 
         private class StateDrop : IState

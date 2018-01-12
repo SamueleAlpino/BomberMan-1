@@ -157,17 +157,16 @@ namespace BomberMan.GameObjects
                     for (int i = 0; i < owner.explosionList.Count; i++)
                     {
                         Pool<Explosion>.RecycleInstance
-                       (
-                           owner.explosionList[i], x =>
-                           {
-                               x.Reset();
-                               foreach (Behaviour component in x.Behaviours)
-                               {
-                                   component.Enabled = false;
-                               }
-                           }
-                           
-                       );
+                        (
+                            owner.explosionList[i], x =>
+                            {
+                                x.Reset();
+                                foreach (Behaviour component in x.Behaviours)
+                                {
+                                    component.Enabled = false;
+                                }
+                            }
+                        );
                     }
 
                     Pool<Bomb>.RecycleInstance
@@ -176,13 +175,11 @@ namespace BomberMan.GameObjects
                         {
                             x.Active = false;
                         }
-
                     );
 
                     Next.OnStateEnter();
                     return Next;
                 }
-
                 return this;
             }
         }
@@ -217,7 +214,6 @@ namespace BomberMan.GameObjects
 
                 if (!timer.IsActive)
                 {
-                    //owner.EnableAnimation(true, "Bomb", true, false);
                     Next.OnStateEnter();
                     return Next;
                 }

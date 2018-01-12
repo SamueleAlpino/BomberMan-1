@@ -83,6 +83,9 @@
     <None Include="Sounds\Explosion.ogg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Sounds\Powerup.ogg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Sounds\StepFast.ogg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
