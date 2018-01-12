@@ -124,6 +124,9 @@ namespace BomberMan
 
                 AudioManager.AddSource(AudioType.SOUND_PICKUP);
                 AudioManager.AddClip("Sounds/Powerup.ogg", AudioType.SOUND_PICKUP);
+
+                AudioManager.AddSource(AudioType.SOUND_DIE);
+                AudioManager.AddClip("Sounds/Dead.ogg", AudioType.SOUND_DIE);
             }
             private void InitObjectPooling()
             {
