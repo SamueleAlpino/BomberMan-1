@@ -59,18 +59,18 @@ namespace BomberMan.GameObjects
 
             speedRndValue = new float[]
             {
-                1.3f,
-                1.5f,
-                1.9f,
-                1.4f,
-                1.5f
+                .5f,
+                .6f,
+                .5f,
+                .9f,
+                .4f,
             };
         }
 
         public void ApplyPowerUp(IPowerupable powerUp)
         {
             if (pType == PowerUpType.HEALTH)
-                powerUp.ApplyHealth(RandomManager.Instance.Random.Next(2, 4)); 
+                powerUp.ApplyHealth(1); 
             else
                 powerUp.ApplySpeed(speedRndValue[RandomManager.Instance.Random.Next(0, speedRndValue.Length)]);
         }

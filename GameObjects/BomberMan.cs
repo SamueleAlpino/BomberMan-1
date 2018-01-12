@@ -128,7 +128,7 @@ namespace BomberMan.GameObjects
             walkRight.NextIdle = idle;
 
             //idle
-            idle.NextDown = walkDown;
+            idle.NextDown = walkDown; 
             idle.NextUp = walkUp;
             idle.NextLeft = walkLeft;
             idle.NextRight = walkRight;
