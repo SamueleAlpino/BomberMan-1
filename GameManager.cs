@@ -88,7 +88,7 @@ namespace BomberMan
 
                 Stats stat = new Stats(3f, 1);
                 owner.player   = new Player("Bomberman", ref stat, Map.PlayerSpawnPoint);
-                owner.targetSpawner = new TargetSpawner(size: 4, shuffleTimeStep: 2.3f);
+                owner.targetSpawner = new TargetSpawner(size: 4, shuffleTimeStep: 1.3f);
                 InitObjectPooling();
                 InitSound();
 

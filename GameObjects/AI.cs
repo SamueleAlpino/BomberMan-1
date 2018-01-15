@@ -47,7 +47,8 @@ namespace BomberMan.GameObjects
         private List<IWaypoint> TargetPoints { get; set; }
 
         public IWaypoint Player { get; set; }
-        public IWaypoint CurrentTarget { get; set; }
+        public IWaypoint TargetPoint { get; set; }
+        public IWaypoint PlayerPoint { get; set; }
         public Vector2 Location { get => this.Transform.Position; set => this.Transform.Position = value; }
 
         private AnimationRenderer   renderer;
@@ -173,6 +174,10 @@ namespace BomberMan.GameObjects
 
             public void OnStateEnter()
             {
+                IWaypoint nextPoint = GameManager.GetAllPoints()[RandomManager.Instance.Random.Next(0, GameManager.PointsCount)];
+
+                if (nextPoint is TargetPoint)
+                    owner.TargetPoint = nextPoint;
             }
 
             public void OnStateExit()
@@ -181,28 +186,16 @@ namespace BomberMan.GameObjects
 
             public IState OnStateUpdate()
             {
-
-                for (int iterator = 0; iterator < GameManager.PointsCount; iterator++)
+                if (owner.IsInRadius())
                 {
-                    if (owner.IsInRadius())
+                    for (int iterator = 0; iterator < GameManager.PointsCount; iterator++)
                     {
-                        owner.CurrentTarget = GameManager.GetAllPoints()[iterator];
-
-                        if (owner.CurrentTarget is Player) // cast not failed
-                        {
-                            owner.ComputePath(owner.map, (int)((owner.CurrentTarget as Player).Transform.Position.X), (int)((owner.CurrentTarget as Player).Transform.Position.Y));
-                        }
-                    }
-                    else
-                    {
-                        owner.CurrentTarget = GameManager.GetAllPoints()[iterator];
-
-                        if (owner.CurrentTarget is TargetPoint) //cast not failed
-                        {
-                            owner.ComputePath(owner.map, (int)((owner.CurrentTarget as TargetPoint).Transform.Position.X), (int)((owner.CurrentTarget as TargetPoint).Transform.Position.Y));
-                        }
+                        owner.PlayerPoint = GameManager.GetAllPoints()[iterator];
+                        owner.ComputePath(owner.map, (int)((owner.PlayerPoint as Player).Transform.Position.X), (int)((owner.PlayerPoint as Player).Transform.Position.Y));
                     }
                 }
+                else
+                    owner.ComputePath(owner.map, (int)((owner.TargetPoint as TargetPoint).Transform.Position.X), (int)((owner.TargetPoint as TargetPoint).Transform.Position.Y));
                 
                 if (owner.CurrentPath == null)
                     return this;
