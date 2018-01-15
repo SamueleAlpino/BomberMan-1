@@ -37,10 +37,11 @@ public interface IPowerup
 
 namespace BomberMan.GameObjects
 {
-    public class Player : GameObject , IPhysical, IPowerupable
+    public class Player : GameObject , IPhysical, IPowerupable, IWaypoint
     {
         public BoxCollider BoxCollider { get; set; }
-
+        public List<IWaypoint> TargetPoints { get; set; }
+        public Vector2 Location { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         //Animation dictionary
         private Dictionary<string, AnimationRenderer> renderer;
@@ -75,11 +76,11 @@ namespace BomberMan.GameObjects
 
             renderer = new Dictionary<string, AnimationRenderer>();
             {
-                renderer.Add("WalkRight" , new AnimationRenderer(this, FlyWeight.Get(fileName), 29, 28, 15, new int[] { 3, 18, 33 }, 0.09f, drawPosition, false, true));
-                renderer.Add("WalkLeft"  , new AnimationRenderer(this, FlyWeight.Get(fileName), 29, 28, 15, new int[] { 1, 16, 31 }, 0.09f, drawPosition, false, true));
-                renderer.Add("WalkDown"  , new AnimationRenderer(this, FlyWeight.Get(fileName), 29, 28, 15, new int[] { 0, 15, 30, 15 }, 0.09f, drawPosition, false, true));
-                renderer.Add("WalkUp"    , new AnimationRenderer(this, FlyWeight.Get(fileName), 29, 28, 15, new int[] { 2, 17, 32 }, 0.09f, drawPosition, false, true));
-                renderer.Add("Idle"      , new AnimationRenderer(this, FlyWeight.Get(fileName), 29, 28, 15, new int[] { 0 }, 0.09f, drawPosition, true, false));
+                renderer.Add("WalkRight" , new AnimationRenderer(this, FlyWeight.Get(fileName), 29, 28, 15, new int[] { 3, 18, 33 }, 0.07f, drawPosition, false, true));
+                renderer.Add("WalkLeft"  , new AnimationRenderer(this, FlyWeight.Get(fileName), 29, 28, 15, new int[] { 1, 16, 31 }, 0.07f, drawPosition, false, true));
+                renderer.Add("WalkDown"  , new AnimationRenderer(this, FlyWeight.Get(fileName), 29, 28, 15, new int[] { 0, 15, 30, 15 }, 0.07f, drawPosition, false, true));
+                renderer.Add("WalkUp"    , new AnimationRenderer(this, FlyWeight.Get(fileName), 29, 28, 15, new int[] { 2, 17, 32 }, 0.07f, drawPosition, false, true));
+                renderer.Add("Idle"      , new AnimationRenderer(this, FlyWeight.Get(fileName), 29, 28, 15, new int[] { 0 }, 0.07f, drawPosition, true, false));
             };
             renderer.ToList().ForEach(item => Transform.Position = drawPosition);
 
@@ -148,6 +149,8 @@ namespace BomberMan.GameObjects
             rollBack.Offset = new Vector2(0.1f,0.2f);
             AddBehaviour<RollBack>(rollBack);
             AddBehaviour<UpdateStates>(new UpdateStates(this, states));
+
+            GameManager.AddTargetPoint(this);
         }
 
 

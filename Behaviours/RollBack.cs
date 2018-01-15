@@ -4,9 +4,6 @@ using BomberMan.GameObjects;
 using OpenTK;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BomberMan.Behaviours
 {
@@ -25,8 +22,6 @@ namespace BomberMan.Behaviours
 
         public void Update()
         {
-            //TODO: need to refactor this rollback collision
-
             if (box == null || owner == null) return;
 
             Vector2 oldPos = box.Position;
@@ -35,20 +30,24 @@ namespace BomberMan.Behaviours
 
             bool prev = CheckCollision((IPhysical)owner, Engine.PhysicalObjects);
 
-             if (!prev) return;
-             owner.Transform.Position = oldPos - Offset;
-              box.Position = oldPos;
+            if (!prev) return;
+            owner.Transform.Position = oldPos - Offset;
+            box.Position = oldPos;
         }
 
         private bool CheckCollision(IPhysical box, List<IPhysical> boxes)
         {
             for (int i = 0; i < boxes.Count; i++)
             {
-                if (box.BoxCollider != boxes[i].BoxCollider && boxes[i].GetType() != typeof(PowerUp))
+                IPhysical currentBox = boxes[i];
+
+                if (box.BoxCollider != currentBox.BoxCollider 
+                    && currentBox.GetType() != typeof(PowerUp) 
+                    && currentBox.GetType() != typeof(AI) 
+                    && currentBox.GetType() != typeof(Explosion))
                 {
-                    if (PhysicsManager.Intersect(box.BoxCollider, boxes[i].BoxCollider))
+                    if (PhysicsManager.Intersect(box.BoxCollider, currentBox.BoxCollider))
                     {
-                        Console.WriteLine("Roll Back");
                         return true;
                     }
                 }

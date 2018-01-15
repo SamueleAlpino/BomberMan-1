@@ -40,7 +40,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\bubbleGhost\BehaviourEngine.Test\bin\Debug\aiv-fast2d-utils-input.dll</HintPath>
     </Reference>
-    <Reference Include="aiv-vorbis, Version=1.0.6195.38242, Culture=neutral, PublicKeyToken=null" />
+    <Reference Include="aiv-vorbis, Version=1.0.6195.38242, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Aiv.Vorbis.0.3.0\lib\net40\aiv-vorbis.dll</HintPath>
+    </Reference>
+    <Reference Include="NVorbis, Version=0.8.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\NVorbis.0.8.5.0\lib\NVorbis.dll</HintPath>
+    </Reference>
     <Reference Include="OpenTK, Version=2.0.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
       <HintPath>packages\OpenTK.2.0.0\lib\net20\OpenTK.dll</HintPath>
     </Reference>
@@ -67,6 +72,8 @@
     <Compile Include="GameObjects\Explosion.cs" />
     <Compile Include="GameObjects\Map.cs" />
     <Compile Include="GameObjects\PowerUp.cs" />
+    <Compile Include="GameObjects\TargetPoint.cs" />
+    <Compile Include="IWaypoint.cs" />
     <Compile Include="LevelManager.cs" />
     <Compile Include="Behaviours\GenerateMap.cs" />
     <Compile Include="UpdateCollider.cs" />
@@ -77,6 +84,8 @@
     <Compile Include="Behaviours\CharacterController.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="OpenTK.dll.config" />
+    <None Include="packages.config" />
     <None Include="Sounds\Dead.ogg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

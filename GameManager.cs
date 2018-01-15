@@ -25,8 +25,15 @@ namespace BomberMan
         private IState currentState;
         #endregion
 
+        private static List<IWaypoint> TargetPoints = new List<IWaypoint>();
+
+        public static List<IWaypoint> GetAllPoints() => TargetPoints;
+
+        public static int PointsCount => TargetPoints.Count;
+
         private Player  player;
         private Level   currentLevel;
+        private TargetSpawner targetSpawner;
 
         private GameManager(GameObject owner) : base(owner)
         {
@@ -44,6 +51,13 @@ namespace BomberMan
 
             currentState   = gameSetup;
             gameSetup.OnStateEnter();
+        }
+
+        public static IWaypoint AddTargetPoint(IWaypoint point)
+        {
+            IWaypoint p = point;
+            TargetPoints.Add(p);
+            return p;
         }
 
         public void Update()
@@ -71,10 +85,14 @@ namespace BomberMan
 
                 Stats stat = new Stats(3f, 1);
                 owner.player   = new Player("Bomberman", ref stat, Map.PlayerSpawnPoint);
+                owner.targetSpawner = new TargetSpawner(size: 4, shuffleTimeStep: 2.3f);
                 InitObjectPooling();
                 InitSound();
-                Engine.Spawn(new SpawnManager(owner.currentLevel.currentMap, owner.player));
 
+
+                Engine.Spawn(owner.targetSpawner);
+
+                Engine.Spawn(new SpawnManager(owner.currentLevel.currentMap, owner.player));
 
                 Engine.Spawn(new PowerUpSpawner(2));
 
@@ -125,7 +143,7 @@ namespace BomberMan
                 AudioManager.AddSource(AudioType.SOUND_PICKUP);
                 AudioManager.AddClip("Sounds/Powerup.ogg", AudioType.SOUND_PICKUP);
 
-                AudioManager.AddSource(AudioType.SOUND_DIE);
+                AudioManager.AddSource(AudioType.SOUND_DIE);  
                 AudioManager.AddClip("Sounds/Dead.ogg", AudioType.SOUND_DIE);
             }
             private void InitObjectPooling()
@@ -133,7 +151,7 @@ namespace BomberMan
                 Pool<Bomb>.Register( () => new Bomb(owner.player.Transform.Position), 100);
                 Pool<PowerUp>.Register( () => new PowerUp(Vector2.Zero), 100);
                 Pool<Explosion>.Register( () => new Explosion(Vector2.Zero));
-                Pool<AI>.Register(() => new AI(Vector2.Zero, null, null ,Vector2.Zero));
+                Pool<AI>.Register(() => new AI(Vector2.Zero, owner.currentLevel.currentMap, GameManager.TargetPoints, Vector2.Zero, 3.0f));
             }
         }
 

@@ -32,6 +32,7 @@ namespace BomberMan.GameObjects
 
         private SpriteRenderer renderer;
         private UpdateCollider boxMng;
+
         //values for health and speed pUps
         private float[] speedRndValue;
 
