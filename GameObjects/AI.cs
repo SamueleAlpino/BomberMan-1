@@ -165,6 +165,7 @@ namespace BomberMan.GameObjects
             private AI owner;
             private Timer t;
             public ChaseState ChaseState;
+            private IWaypoint targetPoint;
 
             public PatrolState(AI owner)
             {
@@ -177,7 +178,7 @@ namespace BomberMan.GameObjects
                 IWaypoint nextPoint = GameManager.GetAllPoints()[RandomManager.Instance.Random.Next(0, GameManager.PointsCount)];
 
                 if (nextPoint is TargetPoint)
-                    owner.TargetPoint = nextPoint;
+                    targetPoint = nextPoint;
             }
 
             public void OnStateExit()
@@ -191,11 +192,13 @@ namespace BomberMan.GameObjects
                     for (int iterator = 0; iterator < GameManager.PointsCount; iterator++)
                     {
                         owner.PlayerPoint = GameManager.GetAllPoints()[iterator];
-                        owner.ComputePath(owner.map, (int)((owner.PlayerPoint as Player).Transform.Position.X), (int)((owner.PlayerPoint as Player).Transform.Position.Y));
+
+                        if(owner.PlayerPoint is Player)
+                            owner?.ComputePath(owner.map, (int)((owner?.PlayerPoint as Player).Transform.Position.X), (int)((owner?.PlayerPoint as Player).Transform.Position.Y));
                     }
                 }
-                else
-                    owner.ComputePath(owner.map, (int)((owner.TargetPoint as TargetPoint).Transform.Position.X), (int)((owner.TargetPoint as TargetPoint).Transform.Position.Y));
+                else if(targetPoint is TargetPoint)
+                    owner?.ComputePath(owner.map, (int)((targetPoint as TargetPoint).Transform.Position.X), (int)((targetPoint as TargetPoint).Transform.Position.Y));
                 
                 if (owner.CurrentPath == null)
                     return this;

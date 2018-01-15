@@ -16,7 +16,7 @@ namespace BomberMan.GameObjects
         public TargetPoint() : base((int)RenderLayer.None, "TargetPoint")
         {
             Location = Map.powerUpSpawnPoints[RandomManager.Instance.Random.Next(0, Map.powerUpSpawnPoints.Count)];
-            AddBehaviour<SpriteRenderer>(new SpriteRenderer("Bomb", this));
+            //AddBehaviour<SpriteRenderer>(new SpriteRenderer("Bomb", this));
         }
     }
 
