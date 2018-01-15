@@ -7,10 +7,11 @@ using System.Text;
 using System.Threading.Tasks;
 using BomberMan.GameObjects;
 using OpenTK;
+using BomberMan.Behaviours;
 
 namespace BomberMan
 {
-    public sealed class GameManager : Behaviour, IUpdatable
+    public sealed class GameManager : GameObject, IUpdatable
     {
         //this must be this
         #region Singleton
@@ -32,11 +33,13 @@ namespace BomberMan
 
         public static int PointsCount => TargetPoints.Count;
 
+        private List<IState> states = new List<IState>();
+
         private Player  player;
         private Level   currentLevel;
         private TargetSpawner targetSpawner;
 
-        private GameManager(GameObject owner) : base(owner)
+        private GameManager(GameObject owner) : base((int)RenderLayer.None, "GameManager")
         {
             gameSetup      = new StateGameSetup(this);
             gameLoop       = new StateGameLoop(this);
@@ -52,6 +55,10 @@ namespace BomberMan
 
             currentState   = gameSetup;
             gameSetup.OnStateEnter();
+
+            states.Add(currentState);
+
+            AddBehaviour<UpdateStates>(new UpdateStates(this, states));
         }
 
         public static IWaypoint AddTargetPoint(IWaypoint point)
@@ -59,11 +66,6 @@ namespace BomberMan
             IWaypoint p = point;
             TargetPoints.Add(p);
             return p;
-        }
-
-        public void Update()
-        {
-            currentState = currentState.OnStateUpdate();
         }
 
         private class StateGameSetup : IState

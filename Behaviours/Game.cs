@@ -11,7 +11,7 @@ namespace BomberMan.Behaviours
     {
         public Game() : base((int)RenderLayer.None)
         {
-            AddBehaviour<GameManager>(GameManager.Instance);
+            Engine.Spawn(GameManager.Instance);
         }
     }
 }
