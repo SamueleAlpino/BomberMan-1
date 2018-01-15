@@ -10,8 +10,6 @@ using BehaviourEngine.Interfaces;
 
 namespace BomberMan.GameObjects
 {
-
-
     public class Explosion : GameObject, IPhysical
     {
         public BoxCollider BoxCollider { get; set; }
@@ -56,12 +54,10 @@ namespace BomberMan.GameObjects
             anim.Reset();
         }
 
-
         public void OnIntersect(IPhysical other)
         {
             if (other is AI)
             {
-                // Test
                 Pool<AI>.RecycleInstance(other as AI, x =>
                 {
                     for (int i = 0; i < x.Behaviours.Count; i++)
@@ -69,7 +65,6 @@ namespace BomberMan.GameObjects
                         x.Behaviours[i].Enabled = false;
                     }
                 });
-               // Pool<AI>.RecycleInstance(other as AI, x => x.Active = false);
             }
         }
 
