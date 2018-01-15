@@ -154,7 +154,7 @@ namespace BomberMan
                 Pool<Bomb>.Register( () => new Bomb(owner.player.Transform.Position), 100);
                 Pool<PowerUp>.Register( () => new PowerUp(Vector2.Zero), 100);
                 Pool<Explosion>.Register( () => new Explosion(Vector2.Zero));
-                Pool<AI>.Register(() => new AI(Vector2.Zero, owner.currentLevel.currentMap, GameManager.TargetPoints, Vector2.Zero, 3.0f));
+                Pool<AI>.Register(() => new AI(Vector2.Zero, owner.currentLevel.currentMap, GameManager.TargetPoints, Vector2.Zero, 3.0f, TargetPoints[RandomManager.Instance.Random.Next(0, TargetPoints.Count)]));
             }
         }
 
