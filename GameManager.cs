@@ -12,6 +12,7 @@ namespace BomberMan
 {
     public sealed class GameManager : Behaviour, IUpdatable
     {
+        //this must be this
         #region Singleton
         private static GameManager instance;
         public static GameManager Instance => instance ?? ( new GameManager( null ) ); // null it's correct since this instance does not belong to any Owner.
