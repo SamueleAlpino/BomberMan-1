@@ -168,13 +168,14 @@ namespace BomberMan.GameObjects
         private class PatrolState : IState
         {
             private AI owner;
-            public  ChaseState ChaseState;
+            private Timer t;
+            public ChaseState ChaseState;
             private GameObject target;
-            private IWaypoint next;
+
             public PatrolState(AI owner)
             {
                 this.owner = owner;
-                next = owner.CurrentTarget;
+                t = new Timer(1.5f);
             }
 
             public void OnStateEnter()
@@ -188,8 +189,10 @@ namespace BomberMan.GameObjects
             public IState OnStateUpdate()
             {
 
+
                 if (owner.IsInRadius(out target))
                 {
+
                     if (target is Player) // cast not failed
                     {
                         owner.CurrentTarget = target as IWaypoint;
@@ -199,21 +202,20 @@ namespace BomberMan.GameObjects
                 }
                 else
                 {
-                    if ((owner.CurrentTarget.Location - owner.Transform.Position).Length < 1f)
-                    {
-                        next = GameManager.GetAllPoints()[RandomManager.Instance.Random.Next(0, GameManager.PointsCount)];
-                        Console.WriteLine(next);
 
-                        while (next is Player)
+                    if (owner.CurrentTarget.Location.X - owner.Transform.Position.X < 0.1f)
+                    {
+                        IWaypoint next = GameManager.GetAllPoints()[RandomManager.Instance.Random.Next(0, GameManager.PointsCount)];
+
+                        owner.CurrentTarget = next;
+                        if (owner.CurrentTarget is TargetPoint) //cast not failed
                         {
-                            next = GameManager.GetAllPoints()[RandomManager.Instance.Random.Next(0, GameManager.PointsCount)];
+                            owner.ComputePath(owner.map, (int)((owner.CurrentTarget as TargetPoint).Transform.Position.X + owner.Offset.X), (int)((owner.CurrentTarget as TargetPoint).Transform.Position.Y + owner.Offset.Y));
                         }
+                        Console.WriteLine("Current Target in Radius : {0}", owner.CurrentTarget);
+
                     }
 
-                    owner.CurrentTarget = next;
-
-                    if (owner.CurrentTarget is TargetPoint) //cast not failed
-                        owner.ComputePath(owner.map, (int)((owner.CurrentTarget as TargetPoint).Transform.Position.X + owner.Offset.X), (int)((owner.CurrentTarget as TargetPoint).Transform.Position.Y + owner.Offset.Y));
 
                 }
 
