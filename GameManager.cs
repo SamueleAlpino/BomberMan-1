@@ -88,8 +88,16 @@ namespace BomberMan
 
                 Stats stat = new Stats(3f, 1);
                 owner.player   = new Player("Bomberman", ref stat, Map.PlayerSpawnPoint);
+<<<<<<< HEAD
                 owner.targetSpawner = new TargetSpawner(size:5);
+=======
+                owner.targetSpawner = new TargetSpawner(size: 4, shuffleTimeStep: 1.3f);
+
+                //Init pools
+>>>>>>> 1c9891dd3126cfc42317dc4f389040b8d9212952
                 InitObjectPooling();
+
+                //Init sounds
                 InitSound();
 
 
@@ -154,6 +162,7 @@ namespace BomberMan
                 Pool<Bomb>.Register( () => new Bomb(owner.player.Transform.Position), 100);
                 Pool<PowerUp>.Register( () => new PowerUp(Vector2.Zero), 100);
                 Pool<Explosion>.Register( () => new Explosion(Vector2.Zero));
+<<<<<<< HEAD
 
                 //Waypoint can't be Player if isn' t in radius
                 IWaypoint next = GetAllPoints()[RandomManager.Instance.Random.Next(0, PointsCount)];
@@ -163,6 +172,9 @@ namespace BomberMan
                 }
                 Console.WriteLine(next);
                 Pool<AI>.Register(() => new AI(Vector2.Zero, owner.currentLevel.currentMap,TargetPoints, Vector2.Zero, 3.0f, next));
+=======
+                Pool<AI>.Register(() => new AI(Vector2.Zero, owner.currentLevel.currentMap, GameManager.TargetPoints, Vector2.Zero, 3.0f));
+>>>>>>> 1c9891dd3126cfc42317dc4f389040b8d9212952
             }
         }
 
