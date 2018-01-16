@@ -41,7 +41,7 @@ namespace BomberMan.GameObjects
     {
         public BoxCollider BoxCollider { get; set; }
         public List<IWaypoint> TargetPoints { get; set; }
-        public Vector2 Location { get => Transform.Position; set => Transform.Position = value; }
+        public Vector2 Location { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         //Animation dictionary
         private Dictionary<string, AnimationRenderer> renderer;

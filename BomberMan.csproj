@@ -77,6 +77,9 @@
     <Compile Include="LevelManager.cs" />
     <Compile Include="Behaviours\GenerateMap.cs" />
     <Compile Include="UpdateCollider.cs" />
+    <None Include="Levels\Level01.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Levels\Level00.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

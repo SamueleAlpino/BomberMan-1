@@ -13,7 +13,11 @@ namespace BomberMan.GameObjects
     {
         public Vector2 Location { get => this.Transform.Position; set => this.Transform.Position = value; }
 
-        public TargetPoint() : base((int)RenderLayer.None, "TargetPoint") => Location = Map.powerUpSpawnPoints[RandomManager.Instance.Random.Next(0, Map.powerUpSpawnPoints.Count)];
+        public TargetPoint() : base((int)RenderLayer.None, "TargetPoint")
+        {
+            Location = Map.powerUpSpawnPoints[RandomManager.Instance.Random.Next(0, Map.powerUpSpawnPoints.Count)];
+            //AddBehaviour<SpriteRenderer>(new SpriteRenderer("Bomb", this));
+        }
     }
 
     public class TargetSpawner : GameObject
