@@ -17,10 +17,10 @@ namespace BomberMan.GameObjects
         }
     }
 
-    public class AI : GameObject, IPathfind , IPhysical, IWaypoint
+    public class AI : GameObject, IPathfind, IPhysical, IWaypoint
     {
-        public List<Node>     CurrentPath { get; set; }
-        public bool           Computed
+        public List<Node> CurrentPath { get; set; }
+        public bool Computed
         {
             get
             {
@@ -31,7 +31,7 @@ namespace BomberMan.GameObjects
         }
         public Vector2 Offset;
         public BoxCollider BoxCollider { get; set; }
-        public float          Speed = 1.4f;
+        public float Speed = 1.4f;
         public IMap iMap
         {
             get
@@ -47,42 +47,42 @@ namespace BomberMan.GameObjects
         private List<IWaypoint> TargetPoints { get; set; }
 
         public IWaypoint Player { get; set; }
-        public IWaypoint TargetPoint { get; set; }
-        public IWaypoint PlayerPoint { get; set; }
+        public IWaypoint CurrentTarget { get; set; }
         public Vector2 Location { get => this.Transform.Position; set => this.Transform.Position = value; }
 
-        private AnimationRenderer   renderer;
-        private PatrolState         patrol;
-        private StateIdle           idle;
-        private ChaseState          chase;
-        private IState              currentState;
-        private IMap                map;
-        private List<IState>        states = new List<IState>();
-        private UpdateCollider      boxMng;
-        private float               radius;
-        
-        public AI(Vector2 spawnPos, IMap map, List<IWaypoint> targetPoints, Vector2 OffsetTarget, float radius) : base((int)RenderLayer.Pawn, "AI")
+        private AnimationRenderer renderer;
+        private PatrolState patrol;
+        private StateIdle idle;
+        private ChaseState chase;
+        private IState currentState;
+        private IMap map;
+        private List<IState> states = new List<IState>();
+        private UpdateCollider boxMng;
+        private float radius;
+
+        public AI(Vector2 spawnPos, IMap map, List<IWaypoint> targetPoints, Vector2 OffsetTarget, float radius, IWaypoint firstTarget) : base((int)RenderLayer.Pawn, "AI")
         {
-            this.map    = map;
+            this.map = map;
             this.TargetPoints = targetPoints;
             this.Offset = OffsetTarget;
             this.radius = radius;
+            CurrentTarget = firstTarget;
             renderer = new AnimationRenderer(this, FlyWeight.Get("Balloon"), ((int)(float)Math.Floor(18.5f)), 17, 4, new int[] { 0, 1, 2, 3 }, 0.2f, spawnPos, true, false);
             renderer.Owner.Transform.Position = spawnPos;
 
             BoxCollider = new BoxCollider(0.8f, 0.8f, this);
-            
+
             Engine.AddPhysicalObject(this);
             AddBehaviour<BoxCollider>(BoxCollider);
 
             AddBehaviour<AnimationRenderer>(renderer);
 
             patrol = new PatrolState(this);
-            idle   = new StateIdle(this);
-            chase  = new ChaseState(this);
+            idle = new StateIdle(this);
+            chase = new ChaseState(this);
 
             //chase.PatrolState = patrol;
-            
+
             patrol.ChaseState = chase;
             chase.NextPatrol = patrol;
 
@@ -97,12 +97,17 @@ namespace BomberMan.GameObjects
             AddBehaviour<UpdateStates>(new UpdateStates(this, states));
         }
 
-        public bool IsInRadius()
+        public bool IsInRadius(out GameObject target)
         {
             float distance = ((Player as GameObject).Transform.Position - this.Transform.Position).Length;
 
             if (distance < radius)
+            {
+                target = Player as GameObject;
                 return true;
+            }
+
+            target = null;
             return false;
         }
 
@@ -138,9 +143,9 @@ namespace BomberMan.GameObjects
 
         private class ChaseState : IState
         {
-            public PatrolState  NextPatrol {get; set; }
-            public ChaseState   NextChase {get; set; }
-            public StateIdle    NextIdle { get; set; }
+            public PatrolState NextPatrol { get; set; }
+            public ChaseState NextChase { get; set; }
+            public StateIdle NextIdle { get; set; }
 
             private AI owner { get; set; }
             public ChaseState(AI owner)
@@ -163,16 +168,9 @@ namespace BomberMan.GameObjects
         private class PatrolState : IState
         {
             private AI owner;
-<<<<<<< HEAD
             public  ChaseState ChaseState;
             private GameObject target;
             private IWaypoint next;
-=======
-            private Timer t;
-            public ChaseState ChaseState;
-            private IWaypoint targetPoint;
-
->>>>>>> 1c9891dd3126cfc42317dc4f389040b8d9212952
             public PatrolState(AI owner)
             {
                 this.owner = owner;
@@ -181,10 +179,6 @@ namespace BomberMan.GameObjects
 
             public void OnStateEnter()
             {
-                IWaypoint nextPoint = GameManager.GetAllPoints()[RandomManager.Instance.Random.Next(0, GameManager.PointsCount)];
-
-                if (nextPoint is TargetPoint)
-                    targetPoint = nextPoint;
             }
 
             public void OnStateExit()
@@ -193,7 +187,6 @@ namespace BomberMan.GameObjects
 
             public IState OnStateUpdate()
             {
-<<<<<<< HEAD
 
                 if (owner.IsInRadius(out target))
                 {
@@ -222,31 +215,18 @@ namespace BomberMan.GameObjects
                     if (owner.CurrentTarget is TargetPoint) //cast not failed
                         owner.ComputePath(owner.map, (int)((owner.CurrentTarget as TargetPoint).Transform.Position.X + owner.Offset.X), (int)((owner.CurrentTarget as TargetPoint).Transform.Position.Y + owner.Offset.Y));
 
-=======
-                if (owner.IsInRadius())
-                {
-                    for (int iterator = 0; iterator < GameManager.PointsCount; iterator++)
-                    {
-                        owner.PlayerPoint = GameManager.GetAllPoints()[iterator];
-
-                        if(owner.PlayerPoint is Player)
-                            owner?.ComputePath(owner.map, (int)((owner?.PlayerPoint as Player).Transform.Position.X), (int)((owner?.PlayerPoint as Player).Transform.Position.Y));
-                    }
->>>>>>> 1c9891dd3126cfc42317dc4f389040b8d9212952
                 }
-                else if(targetPoint is TargetPoint)
-                    owner?.ComputePath(owner.map, (int)((targetPoint as TargetPoint).Transform.Position.X), (int)((targetPoint as TargetPoint).Transform.Position.Y));
-                
+
                 if (owner.CurrentPath == null)
                     return this;
-           
+
                 if (owner.CurrentPath.Count == 0)
                 {
                     owner.CurrentPath = null;
                     return this;
                 }
-           
-                if(!owner.Computed)
+
+                if (!owner.Computed)
                 {
                     Vector2 targetPos = owner.CurrentPath[0].Position;
                     if (targetPos != owner.Transform.Position)
@@ -254,7 +234,7 @@ namespace BomberMan.GameObjects
                         Vector2 direction = (targetPos - owner.Transform.Position).Normalized();
                         owner.Transform.Position += direction * 1.5f * Time.DeltaTime;
                     }
-           
+
                     float distance = (targetPos - owner.Transform.Position).Length;
 
                     if (distance <= 0.1f)
@@ -290,32 +270,32 @@ namespace BomberMan.GameObjects
 
     public class AIManager : Behaviour
     {
-        private GameObject  owner;
-        public  AI          enemies;
-        private byte        columnsID = 23;
+        private GameObject owner;
+        public AI enemies;
+        private byte columnsID = 23;
 
         public AIManager(IMap map, GameObject owner) : base(owner)
         {
             this.owner = owner;
-            int[] ids  = ((map as Map).CellsID.ToArray());
+            int[] ids = ((map as Map).CellsID.ToArray());
 
             for (int i = 0; i < ids.Length; i++)
             {
                 if (ids[i] == 12)
                 {
-                    Engine.Spawn(Pool<AI>.GetInstance( (x) =>
-                    {
-                        x.Transform.Position = new Vector2(i % columnsID, i / columnsID);
-                        x.iMap = map;
-                        x.Player = (owner as IWaypoint);
-                        x.Offset = new Vector2(0.5f, 0.5f);
+                    Engine.Spawn(Pool<AI>.GetInstance((x) =>
+                   {
+                       x.Transform.Position = new Vector2(i % columnsID, i / columnsID);
+                       x.iMap = map;
+                       x.Player = (owner as IWaypoint);
+                       x.Offset = new Vector2(0.5f, 0.5f);
 
-                        for (int component = 0; component < x.Behaviours.Count; component++)
-                        {
-                            x.Behaviours[component].Enabled = true;
-                        }
+                       for (int component = 0; component < x.Behaviours.Count; component++)
+                       {
+                           x.Behaviours[component].Enabled = true;
+                       }
 
-                    }));
+                   }));
                 }
             }
         }
