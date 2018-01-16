@@ -68,7 +68,7 @@
     <Compile Include="GameManager.cs" />
     <Compile Include="GameObjects\AI.cs" />
     <Compile Include="GameObjects\Bomb.cs" />
-    <Compile Include="GameObjects\BomberMan.cs" />
+    <Compile Include="GameObjects\Player.cs" />
     <Compile Include="GameObjects\Explosion.cs" />
     <Compile Include="GameObjects\Map.cs" />
     <Compile Include="GameObjects\PowerUp.cs" />
