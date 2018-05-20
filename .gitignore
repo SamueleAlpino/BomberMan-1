@@ -8,12 +8,14 @@
 *.user
 *.userosscache
 *.sln.docstates
+*.config
+*.csproj
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
 # Build results
-[Dd]ebug/
+#[Dd]ebug/
 [Dd]ebugPublic/
 [Rr]elease/
 [Rr]eleases/
@@ -21,10 +23,11 @@ x64/
 x86/
 bld/
 [Bb]in/
+[Bb]in/Debug/Assets/
+[Bb]in/Debug/Levels/
+[Bb]in/Debug/Sounds/
 [Oo]bj/
 [Ll]og/
-[Bb]in/Debug
-.vs/
 
 # Visual Studio 2015 cache/options directory
 .vs/
@@ -43,6 +46,9 @@ TestResult.xml
 [Dd]ebugPS/
 [Rr]eleasePS/
 dlldata.c
+
+# Benchmark Results
+BenchmarkDotNet.Artifacts/
 
 # .NET Core
 project.lock.json
@@ -74,6 +80,10 @@ artifacts/
 *.pidb
 *.svclog
 *.scc
+*.config
+*.xml
+*.csv
+*.exe
 
 # Chutzpah Test files
 _Chutzpah*
@@ -115,6 +125,10 @@ _TeamCity*
 # DotCover is a Code Coverage Tool
 *.dotCover
 
+# AxoCover is a Code Coverage Tool
+.axoCover/*
+!.axoCover/settings.json
+
 # Visual Studio code coverage results
 *.coverage
 *.coveragexml
@@ -150,7 +164,7 @@ publish/
 # Publish Web Output
 *.[Pp]ublish.xml
 *.azurePubxml
-# TODO: Comment the next line if you want to checkin your web deploy settings
+# Note: Comment the next line if you want to checkin your web deploy settings,
 # but database connection strings (with potential passwords) will be unencrypted
 *.pubxml
 *.publishproj
@@ -185,6 +199,7 @@ AppPackages/
 BundleArtifacts/
 Package.StoreAssociation.xml
 _pkginfo.txt
+*.appx
 
 # Visual Studio cache files
 # files ending in .cache can be ignored
@@ -279,6 +294,9 @@ __pycache__/
 # Cake - Uncomment if you are using it
 # tools/**
 # !tools/packages.config
+
+# Tabs Studio
+*.tss
 
 # Telerik's JustMock configuration file
 *.jmconfig
